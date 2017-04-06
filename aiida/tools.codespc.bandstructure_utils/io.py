@@ -33,24 +33,24 @@ def read_bands(filename):
     Read a HDF5 in bandstructure_utils HDF5 format containing an EigenvalsData instance, and return an AiiDA BandsData instance.
     """
     with h5py.File(filename, 'r') as f:
-        kpoints = _parse_kpoints(f['kpoints_obj'])
         bands = DataFactory('array.bands')()
-        bands.set_kpointsdata(kpoints)
+        _parse_kpoints(bands, f['kpoints_obj'])
         bands.set_bands(f['eigenvals'].value)
     return bands
 
-def _parse_kpoints(hdf5_handle):
+def _parse_kpoints(kpts_obj, hdf5_handle):
+    """
+    Parse a kpoints object in HDF5 form into an existing KpointsData instance.
+    """
     type_tag = hdf5_handle['type_tag'].value
-    kpoints = DataFactory('array.kpoints')()
     if type_tag == 'kpoints_mesh':
-        kpoints.set_kpoints_mesh(
+        kpts_obj.set_kpoints_mesh(
             hdf5_handle['mesh'].value,
             hdf5_handle['offset'].value
         )
     elif type_tag == 'kpoints_explicit':
-        kpoints.set_kpoints(
+        kpts_obj.set_kpoints(
             hdf5_handle['kpoints'].value
         )
     else:
         raise NotImplementedError("Unrecognized type_tag '{}' encountered when parsing k-points data.".format(type_tag))
-    return kpoints
