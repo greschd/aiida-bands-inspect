@@ -8,7 +8,12 @@ from __future__ import division, print_function, unicode_literals
 import h5py
 import numpy as np
 
+from aiida.orm import DataFactory
+
 def write_kpoints(kpoints_data, filename):
+    """
+    Write a 'KpointsData' instance to a file in bandstructure_utils HDF5 format.
+    """
     # This can be replaced with bandstructure_utils.io functions when
     # AiiDA supports Python 3.
     with h5py.File(filename, 'w') as f:
@@ -22,3 +27,30 @@ def write_kpoints(kpoints_data, filename):
             f['kpoints'] = np.array(kpoints_data.get_kpoints())
         else:
             raise NotImplementedError("Unrecognized KpointsData form, has attrs '{}'".format(attrs))
+
+def read_bands(filename):
+    """
+    Read a HDF5 in bandstructure_utils HDF5 format containing an EigenvalsData instance, and return an AiiDA BandsData instance.
+    """
+    with h5py.File(filename, 'r') as f:
+        kpoints = _parse_kpoints(f['kpoints'])
+        bands = DataFactory('array.bands')()
+        bands.set_kpointsdata(kpoints)
+        bands.set_bands(f['eigenvals'].value)
+    return bands
+
+def _parse_kpoints(hdf5_handle):
+    type_tag = hdf5_handle['type_tag'].value
+    kpoints = DataFactory('array.kpoints')()
+    if type_tag == 'kpoints_mesh':
+        kpoints.set_kpoints_mesh(
+            hdf5_handle['mesh'].value,
+            hdf5_handle['offset'].value
+        )
+    elif type_tag == 'kpoints_explicit':
+        kpoints.set_kpoints(
+            hdf5_handle['kpoints'].value
+        )
+    else:
+        raise NotImplementedError("Unrecognized type_tag '{}' encountered when parsing k-points data.".format(type_tag))
+    return kpoints
