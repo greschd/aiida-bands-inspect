@@ -7,9 +7,9 @@ from aiida.orm import DataFactory
 from aiida.parsers.parser import Parser
 from aiida.tools.codespecific.bandstructure_utils.io import read_bands
 
-class ModelParser(Parser):
+class BandsParser(Parser):
     """
-    Parse TBmodels output to a SinglefileData containing the model file.
+    Parse TBmodels bands output to a BandsData object.
     """
     def parse_with_retrieved(self, retrieved):
         try:
