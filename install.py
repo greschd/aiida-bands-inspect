@@ -56,7 +56,7 @@ install_paths = [
     ('parsers.plugins.bandstructure_utils', 'parsers/plugins/bandstructure_utils'),
     ('workflows.bandstructure_utils', 'workflows/bandstructure_utils'),
     ('orm.data.bandstructure_utils', 'orm/data/bandstructure_utils'),
-    # ('tools.codespc.vasp', 'tools/codespecific/vasp'),
+    ('tools.codespc.bandstructure_utils', 'tools/codespecific/bandstructure_utils'),
     # ('djsite.db.subtests.vasp', 'djsite/db/subtests/vasp'),
     # ('commands', 'cmdline/vasp'),
     # ('../doc/source', '../docs/source/plugins/vasp')
