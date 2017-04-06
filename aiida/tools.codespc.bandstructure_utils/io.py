@@ -17,7 +17,7 @@ def write_kpoints(kpoints_data, filename):
             f['type_tag'] = 'kpoints_mesh'
             f['mesh'] = np.array(attrs['mesh'])
             f['offset'] = np.array(attrs['offset'])
-        elif 'array|kpoints' in attrs
+        elif 'array|kpoints' in attrs:
             f['type_tag'] = 'kpoints_explicit'
             f['kpoints'] = np.array(kpoints_data.get_kpoints())
         else:
