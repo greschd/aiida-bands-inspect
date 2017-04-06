@@ -33,7 +33,7 @@ def read_bands(filename):
     Read a HDF5 in bandstructure_utils HDF5 format containing an EigenvalsData instance, and return an AiiDA BandsData instance.
     """
     with h5py.File(filename, 'r') as f:
-        kpoints = _parse_kpoints(f['kpoints'])
+        kpoints = _parse_kpoints(f['kpoints_obj'])
         bands = DataFactory('array.bands')()
         bands.set_kpointsdata(kpoints)
         bands.set_bands(f['eigenvals'].value)

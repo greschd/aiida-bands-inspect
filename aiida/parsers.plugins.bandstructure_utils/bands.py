@@ -9,7 +9,7 @@ from aiida.tools.codespecific.bandstructure_utils.io import read_bands
 
 class BandsParser(Parser):
     """
-    Parse TBmodels bands output to a BandsData object.
+    Parse bandstructure_utils eigenvals file to a BandsData object.
     """
     def parse_with_retrieved(self, retrieved):
         try:
