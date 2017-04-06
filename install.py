@@ -53,8 +53,7 @@ def lndir(src, dst):
 install_paths = [
     ('orm.calc.job.bandstructure_utils', 'orm/calculation/job/bandstructure_utils'),
     ('parsers.plugins.bandstructure_utils', 'parsers/plugins/bandstructure_utils'),
-    ('parsers.plugins.bandstructure_utils', 'parsers/plugins/bandstructure_utils'),
-    ('workflows.bandstructure_utils', 'workflows/bandstructure_utils'),
+    # ('workflows.bandstructure_utils', 'workflows/bandstructure_utils'),
     ('orm.data.bandstructure_utils', 'orm/data/bandstructure_utils'),
     ('tools.codespc.bandstructure_utils', 'tools/codespecific/bandstructure_utils'),
     # ('djsite.db.subtests.vasp', 'djsite/db/subtests/vasp'),
