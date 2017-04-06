@@ -36,7 +36,7 @@ def read_bands(filename):
         kpoints = _parse_kpoints(f['kpoints_obj'])
         # BandsData cannot have a mesh as k-points...
         bands = DataFactory('array.bands')()
-        bands.set_kpoint(kpoints.get_kpoints_mesh(print_list=True))
+        bands.set_kpoints(kpoints.get_kpoints_mesh(print_list=True))
         bands.set_bands(f['eigenvals'].value)
     return bands
 
