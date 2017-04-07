@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env runaiida
 # -*- coding: utf-8 -*-
 #
 # Author:  Dominik Gresch <greschd@gmx.ch>
