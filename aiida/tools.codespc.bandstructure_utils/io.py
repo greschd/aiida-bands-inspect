@@ -22,12 +22,12 @@ def write_kpoints(kpoints_data, filename):
 def _serialize_kpoints(kpoints_data, hdf5_handle):
     attrs = kpoints_data.get_attrs()
     if 'mesh' in attrs:
-        f['type_tag'] = 'kpoints_mesh'
-        f['mesh'] = np.array(attrs['mesh'])
-        f['offset'] = np.array(attrs['offset'])
+        hdf5_handle['type_tag'] = 'kpoints_mesh'
+        hdf5_handle['mesh'] = np.array(attrs['mesh'])
+        hdf5_handle['offset'] = np.array(attrs['offset'])
     elif 'array|kpoints' in attrs:
-        f['type_tag'] = 'kpoints_explicit'
-        f['kpoints'] = np.array(kpoints_data.get_kpoints())
+        hdf5_handle['type_tag'] = 'kpoints_explicit'
+        hdf5_handle['kpoints'] = np.array(kpoints_data.get_kpoints())
     else:
         raise NotImplementedError("Unrecognized KpointsData form, has attrs '{}'".format(attrs))
 
