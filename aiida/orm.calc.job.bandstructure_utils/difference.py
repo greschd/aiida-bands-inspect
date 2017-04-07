@@ -7,17 +7,53 @@ from aiida.orm import JobCalculation, DataFactory
 from aiida.common.utils import classproperty
 from aiida.common.exceptions import InputValidationError
 from aiida.common.datastructures import CalcInfo, CodeInfo
+from aiida.tools.codespecific.bandstructure_utils.io import write_bands
 
 class DifferenceCalculation(JobCalculation):
+    def _init_internal_params(self):
+        super(DifferenceCalculation, self)._init_internal_params()
+
+        self._OUTPUT_FILE_NAME = 'diff.txt'
+        # self._default_parser = 'bandstructure_utils.difference'
+
     @classproperty
     def _use_methods(cls):
         retdict = super(cls, cls)._use_methods
-        retdict['bands'] = dict(
+        retdict['bands1'] = dict(
             valid_types=DataFactory('array.bands'),
-            additional_parameter=1,
-            linkname=lambda par: 'bands{}'.format(par),
-            docstring="Bandstructures which are to be compared"
+            linkname='bands1',
+            docstring="First bandstructure which is to be compared"
+        )
+        retdict['bands2'] = dict(
+            valid_types=DataFactory('array.bands'),
+            linkname='bands2',
+            docstring="Second bandstructures which is to be compared"
         )
         return retdict
 
-    # def _prepare_for_submission(self, tempfolder, inputdict):
+    def _prepare_for_submission(self, tempfolder, inputdict):
+        ev1_filename = 'eigenvals1.hdf5'
+        ev2_filename = 'eigenvals2.hdf5'
+        eigenval_file_1 = tempfolder.get_abs_path(ev1_filename)
+        write_bands(inputdict.pop(self.get_linkname('bands1')), eigenval_file_1)
+        eigenval_file_2 = tempfolder.get_abs_path(ev2_filename)
+        write_bands(inputdict.pop(self.get_linkname('bands2')), eigenval_file_2)
+
+        try:
+            code = inputdict.pop(self.get_linkname('code'))
+        except KeyError:
+            raise InputValidationError('No code specified for this calculation.')
+        if inputdict:
+            raise ValidationError('Cannot add other nodes. Remaining input: {}'.format(inputdict))
+
+        calcinfo = CalcInfo()
+        calcinfo.uuid = self.uuid
+        calcinfo.remote_copy_list = []
+        calcinfo.cmdline_params = ['difference', ev1_filename, ev2_filename, '>', self._OUTPUT_FILE_NAME]
+        calcinfo.retrieve_list = [self._OUTPUT_FILE_NAME]
+
+        codeinfo = CodeInfo()
+        codeinfo.code_uuid = code.uuid
+        calcinfo.codes_info = [codeinfo]
+
+        return calcinfo
