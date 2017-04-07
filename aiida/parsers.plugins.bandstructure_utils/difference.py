@@ -17,7 +17,7 @@ class DifferenceParser(Parser):
             self.logger.error("No retrieved folder found")
 
         with open(out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME), 'r') as f:
-            res = f.read()
+            res = float(f.read())
 
         output_data = DataFactory('parameter')(dict=dict(diff=res))
         new_nodes_list = [(self.get_linkname_outparams(), output_data)]
