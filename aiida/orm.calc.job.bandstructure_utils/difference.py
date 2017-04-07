@@ -21,11 +21,13 @@ class DifferenceCalculation(JobCalculation):
         retdict = super(cls, cls)._use_methods
         retdict['bands1'] = dict(
             valid_types=DataFactory('array.bands'),
+            additional_parameter=None,
             linkname='bands1',
             docstring="First bandstructure which is to be compared"
         )
         retdict['bands2'] = dict(
             valid_types=DataFactory('array.bands'),
+            additional_parameter=None,
             linkname='bands2',
             docstring="Second bandstructures which is to be compared"
         )
