@@ -51,10 +51,10 @@ class DifferenceCalculation(JobCalculation):
         calcinfo = CalcInfo()
         calcinfo.uuid = self.uuid
         calcinfo.remote_copy_list = []
-        calcinfo.cmdline_params = ['difference', ev1_filename, ev2_filename, '>', self._OUTPUT_FILE_NAME]
         calcinfo.retrieve_list = [self._OUTPUT_FILE_NAME]
 
         codeinfo = CodeInfo()
+        codeinfo.cmdline_params = ['difference', ev1_filename, ev2_filename, '>', self._OUTPUT_FILE_NAME]
         codeinfo.code_uuid = code.uuid
         calcinfo.codes_info = [codeinfo]
 
