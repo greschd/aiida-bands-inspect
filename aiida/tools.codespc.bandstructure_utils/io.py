@@ -42,7 +42,7 @@ def read_bands(filename):
         if 'mesh' in bands.get_attrs():
             bands.set_kpoints(kpoints.get_kpoints_mesh(print_list=True))
         else:
-            bands.set_kpointsobj(kpoints)
+            bands.set_kpointsdata(kpoints)
         bands.set_bands(f['eigenvals'].value)
     return bands
 
