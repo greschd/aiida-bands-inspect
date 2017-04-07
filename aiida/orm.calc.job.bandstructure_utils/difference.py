@@ -15,7 +15,7 @@ class DifferenceCalculation(JobCalculation):
         retdict['bands'] = dict(
             valid_types=DataFactory('array.bands'),
             additional_parameter=1,
-            linkname='bands',
+            linkname=lambda par: 'bands{}'.format(par),
             docstring="Bandstructures which are to be compared"
         )
         return retdict
