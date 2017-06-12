@@ -5,7 +5,7 @@
 
 from aiida.orm import DataFactory
 from aiida.parsers.parser import Parser
-from aiida.tools.codespecific.bandstructure_utils.io import read_bands
+from ._tools.io import read_bands
 
 class BandsParser(Parser):
     """
