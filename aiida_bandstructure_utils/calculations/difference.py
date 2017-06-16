@@ -8,7 +8,7 @@ from aiida.common.utils import classproperty
 from aiida.common.exceptions import InputValidationError
 from aiida.common.datastructures import CalcInfo, CodeInfo
 
-from .._tools.io import write_bands
+from ..io import write_bands
 
 class DifferenceCalculation(JobCalculation):
     def _init_internal_params(self):
