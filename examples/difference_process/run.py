@@ -1,19 +1,19 @@
-#!/usr/bin/env python
+#!/usr/bin/env runaiida
 # -*- coding: utf-8 -*-
+#
+# Author:  Dominik Gresch <greschd@gmx.ch>
 
-from __future__ import division, unicode_literals
+from __future__ import division, print_function, unicode_literals
 
-import numpy as np
+from aiida.orm.code import Code
+from aiida.orm import DataFactory, CalculationFactory
+from aiida.work.run import run
 
-def test_difference(config):
-    from aiida.orm.code import Code
-    from aiida.orm import DataFactory, CalculationFactory
-    from aiida.work.run import run
-
+def main():
     DifferenceCalculation = CalculationFactory('bandstructure_utils.difference')
     process = DifferenceCalculation.process()
     inputs = process.get_inputs_template()
-    inputs.code = Code.get_from_string('bandstructure_utils')
+    inputs.code = Code.get_from_string('bandstructure_utils_dev')
     inputs._options.resources = {'num_machines': 1}
     inputs._options.withmpi = False
 
@@ -30,4 +30,7 @@ def test_difference(config):
     inputs.bands2 = bands2
 
     output = run(process, **inputs)
-    assert np.isclose(output['output_parameters'].dict['diff'], 1 / 3)
+    print('Difference:', output['output_parameters'].dict['diff'])
+
+if __name__ == '__main__':
+    main()

@@ -33,8 +33,7 @@ if __name__ == '__main__':
             'h5py',
             'aiida-core',
         ],
-        extras_require={
-        },
+        extras_require={'test': ['numpy', 'aiida-pytest', 'pytest']},
         entry_points={
             'aiida.calculations': [
                 'bandstructure_utils.difference = aiida_bandstructure_utils.calculations.difference:DifferenceCalculation',
