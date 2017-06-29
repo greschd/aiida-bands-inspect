@@ -1,7 +1,0 @@
-code:
-    - label: bandstructure_utils
-      description: bandstructure_utils development version
-      local: False
-      default_plugin: bandstructure_utils.difference
-      remote_computer: localhost
-      remote_abspath: /home/greschd/.virtualenvs/bandstructure_utils_test/bin/bandstructure_utils

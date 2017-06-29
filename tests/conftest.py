@@ -6,5 +6,5 @@ import pytest
 from aiida_pytest import *
 
 @pytest.fixture(scope='session')
-def config(load_config):
-    load_config(os.path.abspath('config.yml'))
+def config(configure_from_file):
+    configure_from_file(os.path.abspath('config.yml'))
