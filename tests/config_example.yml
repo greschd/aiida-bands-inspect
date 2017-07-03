@@ -1,9 +1,3 @@
-setup:
-    profile: test_aiida_bandstructure_utils
-    db_name: test_aiida_bandstructure_utils
-    db_user: test_aiida_bandstructure_utils
-    db_pass: '1234'
-
 computers:
     - name: localhost
       hostname: localhost
