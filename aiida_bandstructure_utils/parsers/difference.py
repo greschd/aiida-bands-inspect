@@ -3,7 +3,7 @@
 #
 # Author:  Dominik Gresch <greschd@gmx.ch>
 
-from aiida.orm import DataFactory
+from aiida.orm.data.base import Float
 from aiida.parsers.parser import Parser
 
 class DifferenceParser(Parser):
@@ -13,13 +13,13 @@ class DifferenceParser(Parser):
     def parse_with_retrieved(self, retrieved):
         try:
             out_folder = retrieved[self._calc._get_linkname_retrieved()]
-        except KeyError:
+        except KeyError as e:
             self.logger.error("No retrieved folder found")
+            raise e
 
         with open(out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME), 'r') as f:
             res = float(f.read())
 
-        output_data = DataFactory('parameter')(dict=dict(diff=res))
-        new_nodes_list = [(self.get_linkname_outparams(), output_data)]
+        new_nodes_list = [('difference', Float(res))]
 
         return True, new_nodes_list

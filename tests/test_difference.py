@@ -30,4 +30,4 @@ def test_difference(configure):
     inputs.bands2 = bands2
 
     output = run(process, **inputs)
-    assert np.isclose(output['output_parameters'].dict['diff'], 1 / 3)
+    assert np.isclose(output['difference'].value, 1 / 3)
