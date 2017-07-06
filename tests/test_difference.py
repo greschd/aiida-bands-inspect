@@ -5,17 +5,14 @@ from __future__ import division, unicode_literals
 
 import numpy as np
 
-def test_difference(configure):
-    from aiida.orm.code import Code
-    from aiida.orm import DataFactory, CalculationFactory
+def test_difference(configure, get_process_inputs):
+    from aiida.orm import DataFactory
     from aiida.work.run import run
 
-    DifferenceCalculation = CalculationFactory('bandstructure_utils.difference')
-    process = DifferenceCalculation.process()
-    inputs = process.get_inputs_template()
-    inputs.code = Code.get_from_string('bandstructure_utils')
-    inputs._options.resources = {'num_machines': 1}
-    inputs._options.withmpi = False
+    process, inputs = get_process_inputs(
+        calculation_string='bandstructure_utils.difference',
+        code_string='bandstructure_utils'
+    )
 
     BandsData = DataFactory('array.bands')
     bands1 = BandsData()
