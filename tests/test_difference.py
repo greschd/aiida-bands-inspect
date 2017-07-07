@@ -5,7 +5,7 @@ from __future__ import division, unicode_literals
 
 import numpy as np
 
-def test_difference(configure, get_process_inputs):
+def test_difference(configure_with_daemon, get_process_inputs):
     from aiida.orm import DataFactory
     from aiida.work.run import run
 

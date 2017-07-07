@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-# Author:  Dominik Gresch <greschd@gmx.ch>
 
 from aiida.orm import DataFactory
 from aiida.parsers.parser import Parser
