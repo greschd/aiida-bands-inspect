@@ -27,4 +27,5 @@ def test_difference(configure_with_daemon, get_process_inputs):
     inputs.bands2 = bands2
 
     output = run(process, **inputs)
+    print(output)
     assert np.isclose(output['difference'].value, 1 / 3)
