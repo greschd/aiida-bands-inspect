@@ -4,11 +4,11 @@ computers:
       description: localhost
       transport: local
       scheduler: direct
-      work_directory: /tmp/test_aiida_bandstructure_utils_run
+      work_directory: /tmp/test_aiida_bands_inspect_run
 
 codes:
-    - label: bandstructure_utils
-      description: bandstructure_utils development version
-      default_plugin: bandstructure_utils.difference
+    - label: bands_inspect
+      description: bands_inspect development version
+      default_plugin: bands_inspect.difference
       remote_computer: localhost
-      remote_abspath: /home/greschd/.virtualenvs/bandstructure_utils_test/bin/bandstructure_utils
+      remote_abspath: /home/greschd/.virtualenvs/bands_inspect_test/bin/bands_inspect

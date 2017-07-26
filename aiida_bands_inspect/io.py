@@ -10,9 +10,9 @@ from aiida.orm import DataFactory
 
 def write_kpoints(kpoints_data, filename):
     """
-    Write a 'KpointsData' instance to a file in bandstructure_utils HDF5 format.
+    Write a 'KpointsData' instance to a file in bands_inspect HDF5 format.
     """
-    # This can be replaced with bandstructure_utils.io functions when
+    # This can be replaced with bands_inspect.io functions when
     # AiiDA supports Python 3.
     with h5py.File(filename, 'w') as f:
         _serialize_kpoints(kpoints_data, f)
@@ -31,7 +31,7 @@ def _serialize_kpoints(kpoints_data, hdf5_handle):
 
 def read_bands(filename):
     """
-    Read a HDF5 in bandstructure_utils HDF5 format containing an EigenvalsData instance, and return an AiiDA BandsData instance.
+    Read a HDF5 in bands_inspect HDF5 format containing an EigenvalsData instance, and return an AiiDA BandsData instance.
     """
     with h5py.File(filename, 'r') as f:
         kpoints = _parse_kpoints(f['kpoints_obj'])
@@ -62,7 +62,7 @@ def _parse_kpoints(hdf5_handle):
 
 def write_bands(bands_data, filename):
     """
-    Write a 'BandsData' instance to a file in bandstructure_utils HDF5 format.
+    Write a 'BandsData' instance to a file in bands_inspect HDF5 format.
     """
     with h5py.File(filename, 'w') as f:
         kpt = f.create_group('kpoints_obj')

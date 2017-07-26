@@ -10,10 +10,10 @@ from aiida.orm import DataFactory, CalculationFactory
 from aiida.work.run import run
 
 def main():
-    DifferenceCalculation = CalculationFactory('bandstructure_utils.difference')
+    DifferenceCalculation = CalculationFactory('bands_inspect.difference')
     process = DifferenceCalculation.process()
     inputs = process.get_inputs_template()
-    inputs.code = Code.get_from_string('bandstructure_utils_dev')
+    inputs.code = Code.get_from_string('bands_inspect_dev')
     inputs._options.resources = {'num_machines': 1}
     inputs._options.withmpi = False
 

@@ -6,7 +6,7 @@ from aiida.parsers.parser import Parser
 
 class DifferenceParser(Parser):
     """
-    Parse bandstructure_utils difference output to float.
+    Parse bands_inspect difference output to float.
     """
     def parse_with_retrieved(self, retrieved):
         try:

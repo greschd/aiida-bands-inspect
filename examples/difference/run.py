@@ -8,8 +8,8 @@ from __future__ import division, print_function, unicode_literals
 from aiida.orm import DataFactory, CalculationFactory
 
 def run():
-    code = Code.get_from_string('bandstructure_utils_dev')
-    calc = CalculationFactory('bandstructure_utils.difference')()
+    code = Code.get_from_string('bands_inspect')
+    calc = CalculationFactory('bands_inspect.difference')()
     calc.use_code(code)
 
     BandsData = DataFactory('array.bands')
@@ -21,6 +21,7 @@ def run():
     bands1.set_bands([[1, 2, 3], [1, 2, 3]])
     bands2.set_bands([[2, 2, 3], [1, 2, 2]])
     calc.use_bands1(bands1)
+    # from aiida.orm.data.base import Int
     calc.use_bands2(bands2)
 
     calc.set_resources(dict(

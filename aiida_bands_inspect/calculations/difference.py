@@ -15,7 +15,7 @@ class DifferenceCalculation(JobCalculation):
         super(DifferenceCalculation, self)._init_internal_params()
 
         self._OUTPUT_FILE_NAME = 'diff.txt'
-        self._default_parser = 'bandstructure_utils.difference'
+        self._default_parser = 'bands_inspect.difference'
 
     @classproperty
     def _use_methods(cls):

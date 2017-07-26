@@ -7,7 +7,7 @@ from ..io import read_bands
 
 class BandsParser(Parser):
     """
-    Parse bandstructure_utils eigenvals file to a BandsData object.
+    Parse bands_inspect eigenvals file to a BandsData object.
     """
     def parse_with_retrieved(self, retrieved):
         try:

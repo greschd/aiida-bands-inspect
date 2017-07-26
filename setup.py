@@ -4,9 +4,9 @@ from setuptools import setup, find_packages
 
 if __name__ == '__main__':
     setup(
-        name='aiida-bandstructure-utils',
+        name='aiida-bands-inspect',
         version='0.0.0a1',
-        description='AiiDA Plugin for running bandstructure_utils',
+        description='AiiDA Plugin for running bands_inspect',
         author='Dominik Gresch',
         author_email='greschd@gmx.ch',
         license='GPL',
@@ -33,11 +33,11 @@ if __name__ == '__main__':
         extras_require={'test': ['numpy', 'aiida-pytest', 'pytest']},
         entry_points={
             'aiida.calculations': [
-                'bandstructure_utils.difference = aiida_bandstructure_utils.calculations.difference:DifferenceCalculation',
+                'bands_inspect.difference = aiida_bands_inspect.calculations.difference:DifferenceCalculation',
             ],
             'aiida.parsers': [
-                'bandstructure_utils.bands = aiida_bandstructure_utils.parsers.bands:BandsParser',
-                'bandstructure_utils.difference = aiida_bandstructure_utils.parsers.difference:DifferenceParser',
+                'bands_inspect.bands = aiida_bands_inspect.parsers.bands:BandsParser',
+                'bands_inspect.difference = aiida_bands_inspect.parsers.difference:DifferenceParser',
             ],
         },
     )

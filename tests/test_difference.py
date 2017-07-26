@@ -10,8 +10,8 @@ def test_difference(configure_with_daemon, get_process_inputs):
     from aiida.work.run import run
 
     process, inputs = get_process_inputs(
-        calculation_string='bandstructure_utils.difference',
-        code_string='bandstructure_utils'
+        calculation_string='bands_inspect.difference',
+        code_string='bands_inspect'
     )
 
     BandsData = DataFactory('array.bands')
