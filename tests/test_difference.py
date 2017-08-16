@@ -3,11 +3,13 @@
 
 from __future__ import division, unicode_literals
 
+import pytest
+
 import numpy as np
 
-def test_difference(configure_with_daemon, get_process_inputs):
+@pytest.fixture
+def bands_process_inputs(get_process_inputs):
     from aiida.orm import DataFactory
-    from aiida.work.run import run
 
     process, inputs = get_process_inputs(
         calculation_string='bands_inspect.difference',
@@ -25,7 +27,27 @@ def test_difference(configure_with_daemon, get_process_inputs):
 
     inputs.bands1 = bands1
     inputs.bands2 = bands2
+    return process, inputs
 
+def test_difference(configure_with_daemon, bands_process_inputs):
+    from aiida.work.run import run
+
+    process, inputs = bands_process_inputs
     output = run(process, **inputs)
-    print(output)
     assert np.isclose(output['difference'].value, 1 / 3)
+
+def test_difference_fastforward(configure_with_daemon, bands_process_inputs):
+    from aiida.orm import DataFactory
+    from aiida.work.run import run
+    from aiida.orm import load_node
+
+    process, inputs = bands_process_inputs
+
+    output1, pid1 = run(process, _return_pid=True, _fast_forward=True, **inputs)
+    output2, pid2 = run(process, _return_pid=True, _fast_forward=True, **inputs)
+    wc1 = load_node(pid1)
+    wc2 = load_node(pid2)
+    print(wc1.get_hash(ignore_errors=False))
+    assert wc1.get_hash(ignore_errors=False) == wc2.get_hash(ignore_errors=False)
+    assert output1 == output2
+    assert pid1 == pid2
