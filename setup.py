@@ -4,7 +4,7 @@ import re
 from setuptools import setup, find_packages
 
 # Get the version number
-with open('./aiida_bands_inspect/_version.py') as f:
+with open('./aiida_bands_inspect/__init__.py') as f:
     match_expr = "__version__[^'\"]+(['\"])([^'\"]+)"
     version = re.search(match_expr, f.read()).group(2).strip()
 

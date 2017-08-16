@@ -1,1 +1,5 @@
-from ._version import __version__
+__version__ = "0.0.0a1"
+
+from . import calculations
+from . import parsers
+from . import io 
