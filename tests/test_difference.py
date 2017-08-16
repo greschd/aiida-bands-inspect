@@ -35,7 +35,7 @@ def test_difference(configure_with_daemon, bands_process_inputs):
     output = run(process, **inputs)
     assert np.isclose(output['difference'].value, 1 / 3)
 
-def test_difference_fastforward(configure_with_daemon, bands_process_inputs):
+def test_difference_fastforward(configure_with_daemon, bands_process_inputs, assert_outputs_equal):
     from aiida.work.run import run
     from aiida.orm import load_node
 
@@ -46,6 +46,4 @@ def test_difference_fastforward(configure_with_daemon, bands_process_inputs):
     c = load_node(pid1)
     c.get_hash(ignore_errors=False)
     assert pid1 == pid2
-    def normalize_output(output):
-        return {key: value.uuid for key, value in output.items()}
-    assert normalize_output(output1) == normalize_output(output2)
+    assert_outputs_equal(output1, output2)
