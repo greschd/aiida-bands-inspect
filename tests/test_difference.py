@@ -45,9 +45,9 @@ def test_difference_fastforward(configure_with_daemon, bands_process_inputs):
 
     output1, pid1 = run(process, _return_pid=True, _fast_forward=True, **inputs)
     output2, pid2 = run(process, _return_pid=True, _fast_forward=True, **inputs)
-    wc1 = load_node(pid1)
-    wc2 = load_node(pid2)
-    print(wc1.get_hash(ignore_errors=False))
-    assert wc1.get_hash(ignore_errors=False) == wc2.get_hash(ignore_errors=False)
-    assert output1 == output2
+    c = load_node(pid1)
+    c.get_hash(ignore_errors=False)
     assert pid1 == pid2
+    def normalize_output(output):
+        return {key: value.uuid for key, value in output.items()}
+    assert normalize_output(output1) == normalize_output(output2)
