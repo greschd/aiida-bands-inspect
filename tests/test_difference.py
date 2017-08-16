@@ -4,7 +4,6 @@
 from __future__ import division, unicode_literals
 
 import pytest
-
 import numpy as np
 
 @pytest.fixture
@@ -37,7 +36,6 @@ def test_difference(configure_with_daemon, bands_process_inputs):
     assert np.isclose(output['difference'].value, 1 / 3)
 
 def test_difference_fastforward(configure_with_daemon, bands_process_inputs):
-    from aiida.orm import DataFactory
     from aiida.work.run import run
     from aiida.orm import load_node
 
