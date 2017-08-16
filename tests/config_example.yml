@@ -1,14 +1,14 @@
 computers:
-    - name: localhost
-      hostname: localhost
-      description: localhost
-      transport: local
-      scheduler: direct
-      work_directory: /tmp/test_aiida_bands_inspect_run
+  localhost:
+    hostname: localhost
+    description: localhost
+    transport: local
+    scheduler: direct
+    work_directory: /tmp/test_aiida_bands_inspect_run
 
 codes:
-    - label: bands_inspect
-      description: bands_inspect development version
-      default_plugin: bands_inspect.difference
-      remote_computer: localhost
-      remote_abspath: /home/greschd/.virtualenvs/bands_inspect/bin/bands-inspect
+  bands_inspect:
+    description: bands_inspect development version
+    default_plugin: bands_inspect.difference
+    remote_computer: localhost
+    remote_abspath: /home/greschd/.virtualenvs/bands_inspect/bin/bands-inspect
