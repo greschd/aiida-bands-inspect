@@ -1,0 +1,4 @@
+test_profile:
+  fast_forward:
+    enabled:
+      - DifferenceCalculation
