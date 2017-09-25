@@ -10,6 +10,7 @@ from aiida.common.datastructures import CalcInfo, CodeInfo
 
 from ..io import write_bands
 
+
 class DifferenceCalculation(JobCalculation):
     def _init_internal_params(self):
         super(DifferenceCalculation, self)._init_internal_params()
@@ -38,16 +39,25 @@ class DifferenceCalculation(JobCalculation):
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
         eigenval_file_1 = tempfolder.get_abs_path(ev1_filename)
-        write_bands(inputdict.pop(self.get_linkname('bands1')), eigenval_file_1)
+        write_bands(
+            inputdict.pop(self.get_linkname('bands1')), eigenval_file_1
+        )
         eigenval_file_2 = tempfolder.get_abs_path(ev2_filename)
-        write_bands(inputdict.pop(self.get_linkname('bands2')), eigenval_file_2)
+        write_bands(
+            inputdict.pop(self.get_linkname('bands2')), eigenval_file_2
+        )
 
         try:
             code = inputdict.pop(self.get_linkname('code'))
         except KeyError:
-            raise InputValidationError('No code specified for this calculation.')
+            raise InputValidationError(
+                'No code specified for this calculation.'
+            )
         if inputdict:
-            raise ValidationError('Cannot add other nodes. Remaining input: {}'.format(inputdict))
+            raise ValidationError(
+                'Cannot add other nodes. Remaining input: {}'.
+                format(inputdict)
+            )
 
         calcinfo = CalcInfo()
         calcinfo.uuid = self.uuid

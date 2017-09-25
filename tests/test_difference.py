@@ -6,6 +6,7 @@ from __future__ import division, unicode_literals
 import pytest
 import numpy as np
 
+
 @pytest.fixture
 def bands_process_inputs(get_process_inputs):
     from aiida.orm import DataFactory
@@ -28,6 +29,7 @@ def bands_process_inputs(get_process_inputs):
     inputs.bands2 = bands2
     return process, inputs
 
+
 def test_difference(configure_with_daemon, bands_process_inputs):
     from aiida.work.run import run
 
@@ -35,7 +37,10 @@ def test_difference(configure_with_daemon, bands_process_inputs):
     output = run(process, _fast_forward=False, **inputs)
     assert np.isclose(output['difference'].value, 1 / 3)
 
-def test_difference_fastforward(configure_with_daemon, bands_process_inputs, assert_outputs_equal):
+
+def test_difference_fastforward(
+    configure_with_daemon, bands_process_inputs, assert_outputs_equal
+):
     from aiida.work.run import run
     from aiida.orm import load_node
 

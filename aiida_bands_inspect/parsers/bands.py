@@ -5,10 +5,12 @@ from aiida.orm import DataFactory
 from aiida.parsers.parser import Parser
 from ..io import read_bands
 
+
 class BandsParser(Parser):
     """
     Parse bands_inspect eigenvals file to a BandsData object.
     """
+
     def parse_with_retrieved(self, retrieved):
         try:
             out_folder = retrieved[self._calc._get_linkname_retrieved()]

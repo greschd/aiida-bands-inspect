@@ -17,10 +17,8 @@ if __name__ == '__main__':
         author_email='greschd@gmx.ch',
         license='GPL',
         classifiers=[
-            'Development Status :: 3 - Alpha',
-            'Environment :: Plugins',
-            'Framework :: AiiDA',
-            'Intended Audience :: Science/Research',
+            'Development Status :: 3 - Alpha', 'Environment :: Plugins',
+            'Framework :: AiiDA', 'Intended Audience :: Science/Research',
             'License :: OSI Approved :: MIT License',
             'Programming Language :: Python :: 2.7',
             'Topic :: Scientific/Engineering :: Physics'
@@ -28,15 +26,15 @@ if __name__ == '__main__':
         keywords='bandstructure aiida workflows',
         packages=find_packages(exclude=['aiida']),
         include_package_data=True,
-        setup_requires=[
-            'reentry'
-        ],
+        setup_requires=['reentry'],
         reentry_register=True,
         install_requires=[
             'h5py',
             'aiida-core',
         ],
-        extras_require={'test': ['numpy', 'aiida-pytest', 'pytest']},
+        extras_require={
+            'dev': ['numpy', 'aiida-pytest', 'pytest', 'yapf', 'pre-commit']
+        },
         entry_points={
             'aiida.calculations': [
                 'bands_inspect.difference = aiida_bands_inspect.calculations.difference:DifferenceCalculation',

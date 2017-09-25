@@ -9,6 +9,7 @@ from aiida.orm.code import Code
 from aiida.orm import DataFactory, CalculationFactory
 from aiida.work.run import run
 
+
 def main():
     DifferenceCalculation = CalculationFactory('bands_inspect.difference')
     process = DifferenceCalculation.process()
@@ -31,6 +32,7 @@ def main():
 
     output = run(process, **inputs)
     print('Difference:', output['output_parameters'].dict['diff'])
+
 
 if __name__ == '__main__':
     main()
