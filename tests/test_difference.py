@@ -3,6 +3,8 @@
 
 from __future__ import division, unicode_literals
 
+import time
+
 import pytest
 import numpy as np
 
@@ -30,15 +32,48 @@ def bands_process_inputs(get_process_inputs):
     return process, inputs
 
 
+@pytest.fixture
+def get_legacy_calc(bands_process_inputs):
+    def inner():
+        from aiida.orm import Code
+        from aiida_bands_inspect.calculations.difference import DifferenceCalculation
+        calc = DifferenceCalculation()
+        _, inputs = bands_process_inputs
+        for key, value in inputs.items():
+            if key.startswith('_') or key in ['dynamic']:
+                continue
+            getattr(calc, 'use_{}'.format(key))(value)
+        code = Code.get_from_string('bands_inspect')
+        calc.use_code(code)
+        calc.set_computer(code.get_computer().name)
+        calc.set_withmpi(False)
+        calc.set_resources({'num_machines': 1})
+        return calc
+
+    return inner
+
+
 def test_difference(configure_with_daemon, bands_process_inputs):
     from aiida.work.run import run
 
     process, inputs = bands_process_inputs
-    output = run(process, _fast_forward=False, **inputs)
+    output = run(process, _use_cache=False, **inputs)
     assert np.isclose(output['difference'].value, 1 / 3)
 
 
-def test_difference_fastforward(
+def test_difference_legacy(configure_with_daemon, get_legacy_calc):
+    """
+    Test DifferenceCalculation through the legacy calculation interface.
+    """
+    calc = get_legacy_calc()
+    calc.store_all()
+    calc.submit()
+    while not calc.has_finished():
+        time.sleep(1)
+    assert np.isclose(calc.out.difference.value, 1 / 3)
+
+
+def test_difference_cache(
     configure_with_daemon, bands_process_inputs, assert_outputs_equal
 ):
     from aiida.work.run import run
@@ -49,7 +84,25 @@ def test_difference_fastforward(
     # Fast-forwarding is enabled in the configuration for DifferenceCalculation
     output1, pid1 = run(process, _return_pid=True, **inputs)
     output2, pid2 = run(process, _return_pid=True, **inputs)
-    c = load_node(pid1)
-    c.get_hash(ignore_errors=False)
-    assert pid1 == pid2
-    assert_outputs_equal(output1, output2)
+    c1 = load_node(pid1)
+    c2 = load_node(pid1)
+    c1.get_hash(ignore_errors=False)
+    assert 'cached_from' in c2.extras()
+    assert output1['difference'] == output2['difference']
+
+
+def test_difference_legacy_cache(configure_with_daemon, get_legacy_calc):
+    """
+    Test DifferenceCalculation caching through the legacy calculation interface.
+    """
+    calc1 = get_legacy_calc()
+    calc2 = get_legacy_calc()
+    calc1.store_all(use_cache=True)
+    if not calc1.has_finished():
+        calc1.submit()
+    while not calc1.has_finished():
+        time.sleep(1)
+    calc2.store_all(use_cache=True)
+    assert calc2.has_finished()
+    assert np.isclose(calc1.out.difference.value, calc2.out.difference.value)
+    assert 'cached_from' in calc2.extras()

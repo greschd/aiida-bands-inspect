@@ -1,4 +1,3 @@
 test_profile:
-  fast_forward:
-    enabled:
-      - DifferenceCalculation
+  enabled:
+    - aiida_bands_inspect.calculations.difference.DifferenceCalculation
