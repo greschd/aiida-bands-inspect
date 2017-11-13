@@ -1,3 +1,2 @@
 test_profile:
-  enabled:
-    - aiida_bands_inspect.calculations.difference.DifferenceCalculation
+  default: True
