@@ -7,7 +7,7 @@ import time
 
 import pytest
 import numpy as np
-from aiida_pytest.skip_caching import skip_caching
+from aiida_pytest.markers import skip_caching
 
 
 @pytest.fixture
@@ -58,7 +58,7 @@ def test_difference(configure_with_daemon, bands_process_inputs):
     from aiida.work.run import run
 
     process, inputs = bands_process_inputs
-    output = run(process, _use_cache=False, **inputs)
+    output = run(process, **inputs)
     assert np.isclose(output['difference'].value, 1 / 3)
 
 
