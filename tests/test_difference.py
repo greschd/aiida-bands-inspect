@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import division, unicode_literals
+from __future__ import division, unicode_literals, print_function
 
 import time
 
@@ -58,7 +58,8 @@ def test_difference(configure_with_daemon, bands_process_inputs):
     from aiida.work.run import run
 
     process, inputs = bands_process_inputs
-    output = run(process, _use_cache=False, **inputs)
+    output, pid = run(process, _use_cache=False, _return_pid=True, **inputs)
+    print('state', load_node(pid).get_state())
     print(output)
     assert np.isclose(output['difference'].value, 1 / 3)
 
