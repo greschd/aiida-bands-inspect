@@ -7,6 +7,7 @@ import time
 
 import pytest
 import numpy as np
+from aiida_pytest.skip_caching import skip_caching
 
 
 @pytest.fixture
@@ -73,6 +74,7 @@ def test_difference_legacy(configure_with_daemon, get_legacy_calc):
     assert np.isclose(calc.out.difference.value, 1 / 3)
 
 
+@skip_caching
 def test_difference_cache(
     configure_with_daemon, bands_process_inputs, assert_outputs_equal
 ):
@@ -91,6 +93,7 @@ def test_difference_cache(
     assert output1['difference'] == output2['difference']
 
 
+@skip_caching
 def test_difference_legacy_cache(configure_with_daemon, get_legacy_calc):
     """
     Test DifferenceCalculation caching through the legacy calculation interface.
