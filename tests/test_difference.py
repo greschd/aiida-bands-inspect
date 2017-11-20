@@ -58,7 +58,8 @@ def test_difference(configure_with_daemon, bands_process_inputs):
     from aiida.work.run import run
 
     process, inputs = bands_process_inputs
-    output = run(process, **inputs)
+    output = run(process, _use_cache=False, **inputs)
+    print(output)
     assert np.isclose(output['difference'].value, 1 / 3)
 
 
