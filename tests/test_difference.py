@@ -56,6 +56,7 @@ def get_legacy_calc(bands_process_inputs):
 
 def test_difference(configure_with_daemon, bands_process_inputs):
     from aiida.work.run import run
+    from aiida.orm import load_node
 
     process, inputs = bands_process_inputs
     output, pid = run(process, _use_cache=False, _return_pid=True, **inputs)
