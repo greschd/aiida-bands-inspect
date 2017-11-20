@@ -38,10 +38,12 @@ if __name__ == '__main__':
         entry_points={
             'aiida.calculations': [
                 'bands_inspect.difference = aiida_bands_inspect.calculations.difference:DifferenceCalculation',
+                'bands_inspect.plot = aiida_bands_inspect.calculations.plot:PlotCalculation'
             ],
             'aiida.parsers': [
                 'bands_inspect.bands = aiida_bands_inspect.parsers.bands:BandsParser',
                 'bands_inspect.difference = aiida_bands_inspect.parsers.difference:DifferenceParser',
+                'bands_inspect.plot = aiida_bands_inspect.parsers.plot:PlotParser'
             ],
         },
     )
