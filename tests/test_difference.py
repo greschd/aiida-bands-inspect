@@ -60,9 +60,16 @@ def test_difference(configure_with_daemon, bands_process_inputs):
 
     process, inputs = bands_process_inputs
     output, pid = run(process, _use_cache=False, _return_pid=True, **inputs)
-    print('state', load_node(pid).get_state())
+    calc_node = load_node(pid)
+    print('State:', calc_node.get_state())
     print(output)
-    assert np.isclose(output['difference'].value, 1 / 3)
+    import subprocess
+    assert np.isclose(output['difference'].value, 1 / 3), print(
+        subprocess.check_output(
+            ["verdi", "calculation", "logshow", "{}".format(pid)],
+            stderr=subprocess.STDOUT
+        )
+    )
 
 
 def test_difference_legacy(configure_with_daemon, get_legacy_calc):
