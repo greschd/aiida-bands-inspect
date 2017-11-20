@@ -33,7 +33,10 @@ if __name__ == '__main__':
             'aiida-core',
         ],
         extras_require={
-            'dev': ['numpy', 'aiida-pytest', 'pytest', 'yapf', 'pre-commit']
+            'dev': [
+                'numpy', 'aiida-pytest', 'pytest', 'yapf', 'pre-commit',
+                'prospector'
+            ]
         },
         entry_points={
             'aiida.calculations': [
