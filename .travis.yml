@@ -9,6 +9,9 @@ addons:
     packages:
       - python3
       - python3-pip
+      - python3-numpy
+      - python3-scipy
+      - python3-matplotlib
   postgresql: "9.5"
 before_install:  # copied from pgtest's travis.yml
   - sudo apt-get install locate
