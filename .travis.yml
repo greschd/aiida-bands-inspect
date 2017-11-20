@@ -21,6 +21,7 @@ before_install:  # copied from pgtest's travis.yml
   - sudo apt-get install postgresql
   - sudo updatedb
 install:
+  - pip3 install -U setuptools
   - pip3 install git+https://github.com/Z2PackDev/bands_inspect.git#egg=bands-inspect
   - pip install -e git+https://github.com/aiidateam/aiida_core.git#egg=aiida_core
   - pip install -e git+https://github.com/greschd/aiida_pytest#egg=aiida_pytest
