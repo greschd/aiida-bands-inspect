@@ -64,12 +64,16 @@ def test_difference(configure_with_daemon, bands_process_inputs):
     print('State:', calc_node.get_state())
     print(output)
     import subprocess
-    assert np.isclose(output['difference'].value, 1 / 3), print(
-        subprocess.check_output(
-            ["verdi", "calculation", "logshow", "{}".format(pid)],
-            stderr=subprocess.STDOUT
+    try:
+        assert np.isclose(output['difference'].value, 1 / 3)
+    except Exception as e:
+        print(
+            subprocess.check_output(
+                ["verdi", "calculation", "logshow", "{}".format(pid)],
+                stderr=subprocess.STDOUT
+            )
         )
-    )
+        raise e
 
 
 def test_difference_legacy(configure_with_daemon, get_legacy_calc):
