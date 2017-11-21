@@ -4,6 +4,7 @@
 from __future__ import division, unicode_literals, print_function
 
 import time
+import subprocess
 
 import pytest
 import numpy as np
@@ -62,18 +63,14 @@ def test_difference(configure_with_daemon, bands_process_inputs):
     output, pid = run(process, _use_cache=False, _return_pid=True, **inputs)
     calc_node = load_node(pid)
     print('State:', calc_node.get_state())
-    print(output)
-    import subprocess
-    try:
-        assert np.isclose(output['difference'].value, 1 / 3)
-    except Exception as e:
-        print(
-            subprocess.check_output(
-                ["verdi", "calculation", "logshow", "{}".format(pid)],
-                stderr=subprocess.STDOUT
-            )
+    print('Output:', output)
+    print(
+        subprocess.check_output(
+            ["verdi", "calculation", "logshow", "{}".format(pid)],
+            stderr=subprocess.STDOUT
         )
-        raise e
+    )
+    assert np.isclose(output['difference'].value, 1 / 3)
 
 
 def test_difference_legacy(configure_with_daemon, get_legacy_calc):
