@@ -5,6 +5,7 @@ computers:
     transport: local
     scheduler: direct
     work_directory: /tmp/test_aiida_bands_inspect_run
+    prepend_text: 'unset PYTHONPATH'
 
 codes:
   bands_inspect:
