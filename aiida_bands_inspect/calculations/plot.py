@@ -10,6 +10,10 @@ from ..io import write_bands
 
 @export
 class PlotCalculation(JobCalculation):
+    """
+    Calculation class for the ``bands_inspect plot`` command.
+    """
+
     def _init_internal_params(self):
         super(PlotCalculation, self)._init_internal_params()
 

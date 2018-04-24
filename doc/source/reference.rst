@@ -21,16 +21,9 @@ Parser classes
 
 .. automodule:: aiida_bands_inspect.parsers
     :members:
-    :imported-members:
 
-.. automodule:: aiida_bands_inspect.parsers.bands
-    :members:
-    :imported-members:
+.. autoclass:: aiida_bands_inspect.parsers.bands.BandsParser
 
-.. automodule:: aiida_bands_inspect.parsers.difference
-    :members:
-    :imported-members:
+.. autoclass:: aiida_bands_inspect.parsers.difference.DifferenceParser
 
-.. automodule:: aiida_bands_inspect.parsers.plot
-    :members:
-    :imported-members:
+.. autoclass:: aiida_bands_inspect.parsers.plot.PlotParser

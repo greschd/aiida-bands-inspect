@@ -16,7 +16,7 @@ from ..io import write_bands
 @export
 class DifferenceCalculation(JobCalculation):
     """
-    Calculation class for 'bands-inspect difference'.
+    Calculation class for the ``bands-inspect difference`` command.
     """
 
     def _init_internal_params(self):
