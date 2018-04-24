@@ -7,10 +7,10 @@ import pytest
 
 
 @pytest.fixture
-def plot_process_inputs(get_process_inputs):
+def get_plot_builder(get_process_builder):
     from aiida.orm import DataFactory
 
-    process, inputs = get_process_inputs(
+    builder = get_process_builder(
         calculation_string='bands_inspect.plot', code_string='bands_inspect'
     )
 
@@ -23,16 +23,16 @@ def plot_process_inputs(get_process_inputs):
     bands1.set_bands([[1, 2, 3], [1, 2, 3]])
     bands2.set_bands([[2, 2, 3], [1, 2, 2]])
 
-    inputs.bands1 = bands1
-    inputs.bands2 = bands2
-    return process, inputs
+    builder.bands1 = bands1
+    builder.bands2 = bands2
+    return builder
 
 
-def test_plot(configure_with_daemon, plot_process_inputs):
-    from aiida.work.run import run
+def test_plot(configure_with_daemon, get_plot_builder):
+    from aiida.work.launch import run
     from aiida.orm import DataFactory
 
-    process, inputs = plot_process_inputs
-    output = run(process, _use_cache=False, **inputs)
+    builder = get_plot_builder
+    output = run(builder)
     assert 'plot' in output
     assert isinstance(output['plot'], DataFactory('singlefile'))
