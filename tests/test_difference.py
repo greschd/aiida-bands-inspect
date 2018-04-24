@@ -12,10 +12,10 @@ from aiida_pytest.markers import skip_caching
 
 
 @pytest.fixture
-def bands_process_inputs(get_process_inputs):
+def get_bands_builder(get_process_builder):
     from aiida.orm import DataFactory
 
-    process, inputs = get_process_inputs(
+    builder = get_process_builder(
         calculation_string='bands_inspect.difference',
         code_string='bands_inspect'
     )
@@ -29,20 +29,21 @@ def bands_process_inputs(get_process_inputs):
     bands1.set_bands([[1, 2, 3], [1, 2, 3]])
     bands2.set_bands([[2, 2, 3], [1, 2, 2]])
 
-    inputs.bands1 = bands1
-    inputs.bands2 = bands2
-    return process, inputs
+    builder.bands1 = bands1
+    builder.bands2 = bands2
+    return builder
 
 
 @pytest.fixture
-def get_legacy_calc(bands_process_inputs):
+def get_legacy_calc(get_bands_builder):
     def inner():
         from aiida.orm import Code
         from aiida_bands_inspect.calculations.difference import DifferenceCalculation
         calc = DifferenceCalculation()
-        _, inputs = bands_process_inputs
+        builder = get_bands_builder
+        inputs = builder._todict()
         for key, value in inputs.items():
-            if key.startswith('_') or key in ['dynamic']:
+            if key.startswith('_') or key in ['dynamic', 'options']:
                 continue
             getattr(calc, 'use_{}'.format(key))(value)
         code = Code.get_from_string('bands_inspect')
@@ -55,18 +56,17 @@ def get_legacy_calc(bands_process_inputs):
     return inner
 
 
-def test_difference(configure_with_daemon, bands_process_inputs):
-    from aiida.work.run import run
+def test_difference(configure_with_daemon, get_bands_builder):
+    from aiida.work.launch import run_get_node
     from aiida.orm import load_node
 
-    process, inputs = bands_process_inputs
-    output, pid = run(process, _use_cache=False, _return_pid=True, **inputs)
-    calc_node = load_node(pid)
+    builder = get_bands_builder
+    output, calc_node = run_get_node(builder)
     print('State:', calc_node.get_state())
     print('Output:', output)
     print(
         subprocess.check_output(
-            ["verdi", "calculation", "logshow", "{}".format(pid)],
+            ["verdi", "calculation", "logshow", "{}".format(calc_node.pk)],
             stderr=subprocess.STDOUT
         )
     )
@@ -80,27 +80,27 @@ def test_difference_legacy(configure_with_daemon, get_legacy_calc):
     calc = get_legacy_calc()
     calc.store_all()
     calc.submit()
-    while not calc.has_finished():
+    while not calc.is_finished:
         time.sleep(1)
     assert np.isclose(calc.out.difference.value, 1 / 3)
 
 
 @skip_caching
 def test_difference_cache(
-    configure_with_daemon, bands_process_inputs, assert_outputs_equal
+    configure_with_daemon, get_bands_builder, assert_outputs_equal
 ):
-    from aiida.work.run import run
+    from aiida.work.launch import run_get_node
     from aiida.orm import load_node
+    from aiida.common.caching import enable_caching
 
-    process, inputs = bands_process_inputs
+    builder = get_bands_builder
 
     # Fast-forwarding is enabled in the configuration for DifferenceCalculation
-    output1, pid1 = run(process, _return_pid=True, **inputs)
-    output2, pid2 = run(process, _return_pid=True, **inputs)
-    c1 = load_node(pid1)
-    c2 = load_node(pid1)
+    with enable_caching():
+        output1, c1 = run_get_node(builder)
+        output2, c2 = run_get_node(builder)
     c1.get_hash(ignore_errors=False)
-    assert 'cached_from' in c2.extras()
+    assert '_aiida_cached_from' in c2.extras()
     assert output1['difference'] == output2['difference']
 
 
@@ -112,11 +112,11 @@ def test_difference_legacy_cache(configure_with_daemon, get_legacy_calc):
     calc1 = get_legacy_calc()
     calc2 = get_legacy_calc()
     calc1.store_all(use_cache=True)
-    if not calc1.has_finished():
+    if not calc1.is_finished:
         calc1.submit()
-    while not calc1.has_finished():
+    while not calc1.is_finished:
         time.sleep(1)
     calc2.store_all(use_cache=True)
-    assert calc2.has_finished()
+    assert calc2.is_finished
     assert np.isclose(calc1.out.difference.value, calc2.out.difference.value)
-    assert 'cached_from' in calc2.extras()
+    assert '_aiida_cached_from' in calc2.extras()
