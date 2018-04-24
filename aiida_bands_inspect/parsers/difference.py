@@ -1,10 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from fsc.export import export
 
 from aiida.orm.data.base import Float
 from aiida.parsers.parser import Parser
 
 
+@export
 class DifferenceParser(Parser):
     """
     Parse bands_inspect difference output to float.

@@ -1,3 +1,5 @@
+from fsc.export import export
+
 from aiida.orm import JobCalculation, DataFactory
 from aiida.common.utils import classproperty
 from aiida.common.exceptions import InputValidationError
@@ -6,6 +8,7 @@ from aiida.common.datastructures import CalcInfo, CodeInfo
 from ..io import write_bands
 
 
+@export
 class PlotCalculation(JobCalculation):
     def _init_internal_params(self):
         super(PlotCalculation, self)._init_internal_params()

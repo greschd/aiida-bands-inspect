@@ -1,10 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from fsc.export import export
 
 from aiida.orm import DataFactory
 from aiida.parsers.parser import Parser
 
 
+@export
 class PlotParser(Parser):
     """
     Parse bands_inspect plot_bands output to a 'singlefile' data.

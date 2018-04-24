@@ -31,6 +31,7 @@ if __name__ == '__main__':
         install_requires=[
             'h5py',
             'aiida-core',
+            'fsc.export',
         ],
         extras_require={
             'dev': [

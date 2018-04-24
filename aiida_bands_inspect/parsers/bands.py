@@ -1,11 +1,13 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from fsc.export import export
 
 from aiida.orm import DataFactory
 from aiida.parsers.parser import Parser
 from ..io import read_bands
 
 
+@export
 class BandsParser(Parser):
     """
     Parse bands_inspect eigenvals file to a BandsData object.

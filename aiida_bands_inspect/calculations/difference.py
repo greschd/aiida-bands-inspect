@@ -1,7 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-# Author:  Dominik Gresch <greschd@gmx.ch>
+"""
+Defines a calculation to run the 'bands-inspect difference' command.
+"""
+
+from fsc.export import export
 
 from aiida.orm import JobCalculation, DataFactory
 from aiida.common.utils import classproperty
@@ -11,7 +13,12 @@ from aiida.common.datastructures import CalcInfo, CodeInfo
 from ..io import write_bands
 
 
+@export
 class DifferenceCalculation(JobCalculation):
+    """
+    Calculation class for 'bands-inspect difference'.
+    """
+
     def _init_internal_params(self):
         super(DifferenceCalculation, self)._init_internal_params()
 
