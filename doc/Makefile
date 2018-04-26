@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    = -n
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = aiida-tbextraction
+SPHINXPROJ    = aiida-bands-inspect
 SOURCEDIR     = source
 BUILDDIR      = build
 TARGETDIR     = /home/greschd/programming/Z2Pack_website/web/aiida-plugins/aiida-bands-inspect
