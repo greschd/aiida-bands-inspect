@@ -22,7 +22,7 @@ view:
 	xdg-open "$(BUILDDIR)"/html/index.html
 
 move:
-	rm -r $(TARGETDIR)
+	-rm -r $(TARGETDIR)
 	mv $(BUILDDIR)/html $(TARGETDIR)
 
 # Catch-all target: route all unknown targets to Sphinx using the new
