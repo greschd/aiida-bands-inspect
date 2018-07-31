@@ -53,11 +53,11 @@ def read_bands(filename):
 def _parse_kpoints(hdf5_handle):
     type_tag = hdf5_handle['type_tag'].value
     kpoints = DataFactory('array.kpoints')()
-    if type_tag == 'kpoints_mesh':
+    if 'kpoints_mesh' in type_tag:
         kpoints.set_kpoints_mesh(
             hdf5_handle['mesh'].value, hdf5_handle['offset'].value
         )
-    elif type_tag == 'kpoints_explicit':
+    elif 'kpoints_explicit' in type_tag:
         kpoints.set_kpoints(hdf5_handle['kpoints'].value)
     else:
         raise NotImplementedError(
@@ -75,4 +75,4 @@ def write_bands(bands_data, filename):
         kpt = f.create_group('kpoints_obj')
         _serialize_kpoints(bands_data, kpt)
         f['eigenvals'] = bands_data.get_bands()
-        f['type_tag'] = 'eigenvals_data'
+        f['type_tag'] = 'bands_inspect.eigenvals_data'
