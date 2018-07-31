@@ -74,5 +74,9 @@ def write_bands(bands_data, filename):
     with h5py.File(filename, 'w') as f:
         kpt = f.create_group('kpoints_obj')
         _serialize_kpoints(bands_data, kpt)
-        f['eigenvals'] = bands_data.get_bands()
+        bands_arr = bands_data.get_bands()
+        if len(bands_arr.shape) == 3:
+            assert bands_arr.shape[0] == 1
+            bands_arr = bands_arr[0, :, :]
+        f['eigenvals'] = bands_arr
         f['type_tag'] = 'bands_inspect.eigenvals_data'
