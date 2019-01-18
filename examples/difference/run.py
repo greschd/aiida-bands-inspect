@@ -28,7 +28,7 @@ def run():
 
     calc.set_resources(dict(num_machines=1, tot_num_mpiprocs=1))
     calc.set_withmpi(False)
-    calc.set_computer(Computer.get('localhost'))
+    calc.set_computer(Computer.get(name='localhost'))
     calc.store_all()
     calc.submit()
     print('Submitted calculation', calc.pk)
