@@ -1,7 +1,8 @@
 #!/usr/bin/env runaiida
 # -*- coding: utf-8 -*-
-#
-# Author:  Dominik Gresch <greschd@gmx.ch>
+
+# © 2017-2019, ETH Zurich, Institut für Theoretische Physik
+# Author: Dominik Gresch <greschd@gmx.ch>
 
 from __future__ import division, print_function, unicode_literals
 

@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+
+# © 2017-2019, ETH Zurich, Institut für Theoretische Physik
+# Author: Dominik Gresch <greschd@gmx.ch>
 """
 Usage: python configure.py travis_data_folder test_folder
 """
