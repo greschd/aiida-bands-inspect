@@ -16,7 +16,7 @@ addons:
       - python3-matplotlib
       - python3-h5py
   postgresql: "9.5"
-before_install:  # copied from pgtest's travis.yml
+before_install:
   - sudo pip3 install -U setuptools
   - sudo pip3 install git+https://github.com/Z2PackDev/bands_inspect.git#egg=bands-inspect
 install:
