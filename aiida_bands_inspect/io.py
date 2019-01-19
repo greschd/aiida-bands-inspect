@@ -64,8 +64,8 @@ def _parse_kpoints(hdf5_handle):
         kpoints.set_kpoints(hdf5_handle['kpoints'].value)
     else:
         raise NotImplementedError(
-            "Unrecognized type_tag '{}' encountered when parsing k-points data.".
-            format(type_tag)
+            "Unrecognized type_tag '{}' encountered when parsing k-points data."
+            .format(type_tag)
         )
     return kpoints
 

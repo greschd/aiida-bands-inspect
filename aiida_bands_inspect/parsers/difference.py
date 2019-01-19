@@ -22,8 +22,9 @@ class DifferenceParser(Parser):
             self.logger.error("No retrieved folder found")
             raise e
 
-        with open(out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME),
-                  'r') as f:
+        with open(
+            out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME), 'r'
+        ) as f:
             res = float(f.read())
 
         new_nodes_list = [('difference', Float(res))]

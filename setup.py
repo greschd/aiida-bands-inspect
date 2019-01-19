@@ -38,8 +38,11 @@ if __name__ == '__main__':
         ],
         extras_require={
             'dev': [
-                'numpy', 'aiida-pytest', 'pytest', 'yapf', 'pre-commit',
-                'prospector'
+                'numpy',
+                'aiida-pytest',
+                'pytest',
+                'yapf==0.25',
+                'pre-commit',
             ]
         },
         entry_points={
