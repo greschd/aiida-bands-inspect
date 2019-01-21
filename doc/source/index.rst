@@ -6,6 +6,8 @@ aiida-bands-inspect
 
 ``aiida-bands-inspect`` is a plugin for AiiDA to run the `bands-inspect <http://bands-inspect.readthedocs.io>`_ code.
 
+The calculations and parsers defined in this plugin are simple wrappers around some of the CLI defined by ``bands-inspect``. Input and output variables are described in the following reference:
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
