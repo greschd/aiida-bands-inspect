@@ -21,7 +21,7 @@ if __name__ == '__main__':
         license='GPL',
         classifiers=[
             'Development Status :: 3 - Alpha', 'Environment :: Plugins',
-            'Framework :: AiiDA', 'Intended Audience :: Science/Research',
+            'Intended Audience :: Science/Research',
             'License :: OSI Approved :: Apache Software License',
             'Programming Language :: Python :: 2.7',
             'Topic :: Scientific/Engineering :: Physics'
