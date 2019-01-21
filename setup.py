@@ -33,7 +33,7 @@ if __name__ == '__main__':
         reentry_register=True,
         install_requires=[
             'h5py',
-            'aiida-core',
+            'aiida-core>=1.0.0a4',
             'fsc.export',
         ],
         extras_require={
