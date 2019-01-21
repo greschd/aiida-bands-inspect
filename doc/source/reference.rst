@@ -7,17 +7,11 @@ Reference
 Calculation classes
 -------------------
 
-.. automodule:: aiida_bands_inspect.calculations
+.. autoclass:: aiida_bands_inspect.calculations.difference.DifferenceCalculation
     :members:
-    :imported-members:
 
-.. automodule:: aiida_bands_inspect.calculations.difference
+.. autoclass:: aiida_bands_inspect.calculations.plot.PlotCalculation
     :members:
-    :imported-members:
-
-.. automodule:: aiida_bands_inspect.calculations.plot
-    :members:
-    :imported-members:
 
 Parser classes
 --------------

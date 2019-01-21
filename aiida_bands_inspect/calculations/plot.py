@@ -2,6 +2,9 @@
 
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
+"""
+Defines the a calculation class for the ``bands-inspect plot`` command.
+"""
 
 from fsc.export import export
 
@@ -17,6 +20,13 @@ from ..io import write_bands
 class PlotCalculation(JobCalculation):
     """
     Calculation class for the ``bands_inspect plot`` command.
+
+    Arguments
+    ---------
+    bands1 : aiida.orm.data.array.bands.BandsData
+        First band structure to plot.
+    bands2 : aiida.orm.data.array.bands.BandsData
+        Second band structure to plot.
     """
 
     def _init_internal_params(self):

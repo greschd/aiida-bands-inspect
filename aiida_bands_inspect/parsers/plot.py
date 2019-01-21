@@ -12,7 +12,12 @@ from aiida.parsers.parser import Parser
 @export
 class PlotParser(Parser):
     """
-    Parse bands_inspect plot_bands output to a 'singlefile' data.
+    Parse ``bands-inspect plot_bands`` output to a 'singlefile' data.
+
+    Returns
+    -------
+    plot : aiida.orm.data.singlefile.SinglefileData
+        File containing the generated plot.
     """
 
     def parse_with_retrieved(self, retrieved):

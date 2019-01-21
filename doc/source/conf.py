@@ -18,7 +18,7 @@ import aiida_bands_inspect
 # ones.
 extensions = [
     'sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.mathjax',
-    'sphinx.ext.viewcode', 'aiida.sphinxext'
+    'sphinx.ext.viewcode', 'sphinx.ext.napoleon', 'aiida.sphinxext'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -145,4 +145,5 @@ intersphinx_mapping = {
     'https://docs.python.org/': None,
     'http://z2pack.ethz.ch/strain': None,
     'http://z2pack.ethz.ch/symmetry-representation': None,
+    'http://aiida-core.readthedocs.io/en/stable': None,
 }

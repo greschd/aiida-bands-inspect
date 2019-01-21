@@ -3,7 +3,7 @@
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 """
-Defines a calculation to run the 'bands-inspect difference' command.
+Defines a calculation to run the ``bands-inspect difference`` command.
 """
 
 from fsc.export import export
@@ -20,6 +20,13 @@ from ..io import write_bands
 class DifferenceCalculation(JobCalculation):
     """
     Calculation class for the ``bands-inspect difference`` command.
+
+    Arguments
+    ---------
+    bands1 : aiida.orm.data.array.bands.BandsData
+        First band structure to compare.
+    bands2 : aiida.orm.data.array.bands.BandsData
+        Second band structure to compare.
     """
 
     def _init_internal_params(self):

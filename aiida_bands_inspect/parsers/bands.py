@@ -14,6 +14,11 @@ from ..io import read_bands
 class BandsParser(Parser):
     """
     Parse bands_inspect eigenvals file to a BandsData object.
+
+    Returns
+    -------
+    bands : aiida.orm.data.array.bands.BandsData
+        Retrieved band structure.
     """
 
     def parse_with_retrieved(self, retrieved):

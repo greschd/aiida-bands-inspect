@@ -12,7 +12,12 @@ from aiida.parsers.parser import Parser
 @export
 class DifferenceParser(Parser):
     """
-    Parse bands_inspect difference output to float.
+    Parse ``bands_inspect difference`` output to float.
+
+    Returns
+    -------
+    difference : aiida.orm.data.base.Float
+        The calculated average difference.
     """
 
     def parse_with_retrieved(self, retrieved):
