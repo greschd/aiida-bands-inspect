@@ -22,7 +22,7 @@ before_install:
   - sudo pip3 install -U setuptools
   - sudo pip3 install git+https://github.com/Z2PackDev/bands_inspect.git#egg=bands-inspect
 install:
-  - pip install -U pip wheel setuptools
+  - pip install -U 'pip<19' wheel setuptools
   - pip install git+https://github.com/aiidateam/aiida_core@v1.0.0a4#egg=aiida_core
   - pip install git+https://github.com/greschd/aiida_pytest@support_alpha_4#egg=aiida_pytest
   - pip install .[dev]
