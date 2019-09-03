@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# © 2019, Microsoft
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
@@ -11,7 +12,6 @@ import subprocess
 
 import pytest
 import numpy as np
-from aiida_pytest.markers import skip_caching
 
 
 @pytest.fixture
@@ -54,7 +54,6 @@ def test_difference(configure_with_daemon, get_bands_builder):
     assert np.isclose(output['difference'].value, 1 / 3)
 
 
-@skip_caching
 def test_difference_cache(
     configure_with_daemon, get_bands_builder, assert_outputs_equal
 ):
@@ -69,5 +68,5 @@ def test_difference_cache(
         output1, c1 = run_get_node(builder)
         output2, c2 = run_get_node(builder)
     c1.get_hash(ignore_errors=False)
-    assert '_aiida_cached_from' in c2.extras()
+    assert '_aiida_cached_from' in c2.extras
     assert output1['difference'] == output2['difference']
