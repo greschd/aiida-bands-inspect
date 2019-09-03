@@ -5,7 +5,7 @@
 
 from fsc.export import export
 
-from aiida.orm import DataFactory
+from aiida.plugins import DataFactory
 from aiida.parsers.parser import Parser
 
 
@@ -20,7 +20,7 @@ class PlotParser(Parser):
         File containing the generated plot.
     """
 
-    def parse_with_retrieved(self, retrieved):
+    def parse(self, **kwargs):
         try:
             out_folder = retrieved[self._calc._get_linkname_retrieved()]
         except KeyError as e:

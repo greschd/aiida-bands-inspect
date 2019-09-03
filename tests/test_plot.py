@@ -11,7 +11,7 @@ import pytest
 
 @pytest.fixture
 def get_plot_builder(get_process_builder):
-    from aiida.orm import DataFactory
+    from aiida.plugins import DataFactory
 
     builder = get_process_builder(
         calculation_string='bands_inspect.plot', code_string='bands_inspect'
@@ -32,8 +32,8 @@ def get_plot_builder(get_process_builder):
 
 
 def test_plot(configure_with_daemon, get_plot_builder):
-    from aiida.work.launch import run
-    from aiida.orm import DataFactory
+    from aiida.engine.launch import run
+    from aiida.plugins import DataFactory
 
     builder = get_plot_builder
     output = run(builder)

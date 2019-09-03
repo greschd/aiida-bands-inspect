@@ -5,7 +5,7 @@
 
 from fsc.export import export
 
-from aiida.orm.data.base import Float
+from aiida.orm import Float
 from aiida.parsers.parser import Parser
 
 
@@ -20,7 +20,7 @@ class DifferenceParser(Parser):
         The calculated average difference.
     """
 
-    def parse_with_retrieved(self, retrieved):
+    def parse(self, **kwargs):
         try:
             out_folder = retrieved[self._calc._get_linkname_retrieved()]
         except KeyError as e:

@@ -17,7 +17,7 @@ import numpy as np
     }]
 )
 def test_write_read(configure, bands_params):
-    from aiida.orm import DataFactory
+    from aiida.plugins import DataFactory
     from aiida_bands_inspect.io import read_bands, write_bands
     BandsData = DataFactory('array.bands')
     bands = BandsData()

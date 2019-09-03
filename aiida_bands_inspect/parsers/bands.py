@@ -5,7 +5,7 @@
 
 from fsc.export import export
 
-from aiida.orm import DataFactory
+from aiida.plugins import DataFactory
 from aiida.parsers.parser import Parser
 from ..io import read_bands
 
@@ -21,7 +21,7 @@ class BandsParser(Parser):
         Retrieved band structure.
     """
 
-    def parse_with_retrieved(self, retrieved):
+    def parse(self, **kwargs):
         try:
             out_folder = retrieved[self._calc._get_linkname_retrieved()]
         except KeyError:

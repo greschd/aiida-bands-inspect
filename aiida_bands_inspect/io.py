@@ -9,7 +9,7 @@ from __future__ import division, print_function, unicode_literals
 import h5py
 import numpy as np
 
-from aiida.orm import DataFactory
+from aiida.plugins import DataFactory
 
 
 def write_kpoints(kpoints_data, filename):

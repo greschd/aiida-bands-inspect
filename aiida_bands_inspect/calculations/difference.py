@@ -8,16 +8,16 @@ Defines a calculation to run the ``bands-inspect difference`` command.
 
 from fsc.export import export
 
-from aiida.orm import JobCalculation, DataFactory
+from aiida.plugins import CalcJob, DataFactory
 from aiida.common.utils import classproperty
-from aiida.common.exceptions import InputValidationError
-from aiida.common.datastructures import CalcInfo, CodeInfo
+from aiida.common import InputValidationError
+from aiida.common import CalcInfo, CodeInfo
 
 from ..io import write_bands
 
 
 @export
-class DifferenceCalculation(JobCalculation):
+class DifferenceCalculation(CalcJob):
     """
     Calculation class for the ``bands-inspect difference`` command.
 
@@ -52,7 +52,7 @@ class DifferenceCalculation(JobCalculation):
         )
         return retdict
 
-    def _prepare_for_submission(self, tempfolder, inputdict):
+    def prepare_for_submission(self, tempfolder, inputdict):
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
         eigenval_file_1 = tempfolder.get_abs_path(ev1_filename)

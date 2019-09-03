@@ -16,7 +16,7 @@ from aiida_pytest.markers import skip_caching
 
 @pytest.fixture
 def get_bands_builder(get_process_builder):
-    from aiida.orm import DataFactory
+    from aiida.plugins import DataFactory
 
     builder = get_process_builder(
         calculation_string='bands_inspect.difference',
@@ -38,7 +38,7 @@ def get_bands_builder(get_process_builder):
 
 
 def test_difference(configure_with_daemon, get_bands_builder):
-    from aiida.work.launch import run_get_node
+    from aiida.engine.launch import run_get_node
     from aiida.orm import load_node
 
     builder = get_bands_builder
@@ -58,9 +58,9 @@ def test_difference(configure_with_daemon, get_bands_builder):
 def test_difference_cache(
     configure_with_daemon, get_bands_builder, assert_outputs_equal
 ):
-    from aiida.work.launch import run_get_node
+    from aiida.engine.launch import run_get_node
     from aiida.orm import load_node
-    from aiida.common.caching import enable_caching
+    from aiida.manage.caching import enable_caching
 
     builder = get_bands_builder
 
