@@ -8,10 +8,11 @@ Defines the a calculation class for the ``bands-inspect plot`` command.
 
 from fsc.export import export
 
-from aiida.plugins import CalcJob, DataFactory
+from aiida.engine import CalcJob
 from aiida.common.utils import classproperty
 from aiida.common import InputValidationError
 from aiida.common import CalcInfo, CodeInfo
+from aiida.plugins import DataFactory
 
 from ..io import write_bands
 
@@ -39,13 +40,13 @@ class PlotCalculation(CalcJob):
     def _use_methods(cls):
         retdict = super(cls, cls)._use_methods
         retdict['bands1'] = dict(
-            valid_types=DataFactory('array.bands'),
+            valid_type=DataFactory('array.bands'),
             additional_parameter=None,
             linkname='bands1',
             docstring="First bandstructure which is to be plotted"
         )
         retdict['bands2'] = dict(
-            valid_types=DataFactory('array.bands'),
+            valid_type=DataFactory('array.bands'),
             additional_parameter=None,
             linkname='bands2',
             docstring="Second bandstructures which is to be plotted"

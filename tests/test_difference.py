@@ -47,7 +47,7 @@ def test_difference(configure_with_daemon, get_bands_builder):
     print('Output:', output)
     print(
         subprocess.check_output([
-            "verdi", "calculation", "logshow", "{}".format(calc_node.pk)
+            "verdi", "process", "report", "{}".format(calc_node.pk)
         ],
                                 stderr=subprocess.STDOUT)
     )

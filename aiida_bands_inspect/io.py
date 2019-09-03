@@ -23,7 +23,7 @@ def write_kpoints(kpoints_data, filename):
 
 
 def _serialize_kpoints(kpoints_data, hdf5_handle):
-    attrs = kpoints_data.get_attrs()
+    attrs = kpoints_data.attributes
     if 'mesh' in attrs:
         hdf5_handle['type_tag'] = 'kpoints_mesh'
         hdf5_handle['mesh'] = np.array(attrs['mesh'])
@@ -45,7 +45,7 @@ def read_bands(filename):
         kpoints = _parse_kpoints(f['kpoints_obj'])
         # BandsData cannot have a mesh as k-points...
         bands = DataFactory('array.bands')()
-        if 'mesh' in kpoints.get_attrs():
+        if 'mesh' in kpoints.attributes:
             bands.set_kpoints(kpoints.get_kpoints_mesh(print_list=True))
         else:
             bands.set_kpointsdata(kpoints)

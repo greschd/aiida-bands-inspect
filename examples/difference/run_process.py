@@ -16,8 +16,8 @@ def main():
     process = DifferenceCalculation.process()
     builder = process.get_builder()
     builder.code = Code.get_from_string('bands_inspect')
-    builder.options.resources = {'num_machines': 1}
-    builder.options.withmpi = False
+    builder.metadata.options.resources = {'num_machines': 1}
+    builder.metadata.options.withmpi = False
 
     BandsData = DataFactory('array.bands')
     bands1 = BandsData()

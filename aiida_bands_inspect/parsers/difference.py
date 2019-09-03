@@ -8,6 +8,7 @@ from fsc.export import export
 from aiida.orm import Float
 from aiida.parsers.parser import Parser
 
+from ..calculations.difference import DifferenceCalculation
 
 @export
 class DifferenceParser(Parser):
@@ -22,16 +23,14 @@ class DifferenceParser(Parser):
 
     def parse(self, **kwargs):
         try:
-            out_folder = retrieved[self._calc._get_linkname_retrieved()]
+            out_folder = self.retrieved
         except KeyError as e:
             self.logger.error("No retrieved folder found")
             raise e
 
-        with open(
-            out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME), 'r'
+        with out_folder.open(
+            DifferenceCalculation._OUTPUT_FILE_NAME, 'r'
         ) as f:
             res = float(f.read())
 
-        new_nodes_list = [('difference', Float(res))]
-
-        return True, new_nodes_list
+        self.out('difference', Float(res))
