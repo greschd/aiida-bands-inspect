@@ -27,7 +27,8 @@
   "install_requires": [
     "h5py",
     "aiida-core>=1.0.0a4",
-    "fsc.export"
+    "fsc.export",
+    "six"
   ],
   "extras_require": {
     "dev": [

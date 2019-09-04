@@ -29,9 +29,7 @@ class PlotParser(Parser):
             self.logger.error("No retrieved folder found")
             raise e
 
-        self.out(
-            'plot',
-            DataFactory('singlefile')(
-                out_folder.open(PlotCalculation._OUTPUT_FILE_NAME, 'rb')
-            )
-        )
+        with out_folder.open(
+            PlotCalculation._OUTPUT_FILE_NAME, 'rb'
+        ) as handle:
+            self.out('plot', DataFactory('singlefile')(file=handle))
