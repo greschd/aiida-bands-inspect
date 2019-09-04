@@ -6,13 +6,18 @@
 
 from __future__ import division, print_function, unicode_literals
 
-from aiida.orm import DataFactory, CalculationFactory
+from aiida.orm import Code
+from aiida.plugins import DataFactory, CalculationFactory
+from aiida.engine import run
 
 
-def run():
-    code = Code.get_from_string('bands_inspect')
-    calc = CalculationFactory('bands_inspect.difference')()
-    calc.use_code(code)
+def main():
+    DifferenceCalculation = CalculationFactory('bands_inspect.difference')
+    builder = DifferenceCalculation.get_builder()
+    builder.code = Code.get_from_string('bands_inspect')
+    builder.metadata.options = dict(
+        resources={'num_machines': 1}, withmpi=False
+    )
 
     BandsData = DataFactory('array.bands')
     bands1 = BandsData()
@@ -22,17 +27,13 @@ def run():
     bands2.set_kpoints(kpoints)
     bands1.set_bands([[1, 2, 3], [1, 2, 3]])
     bands2.set_bands([[2, 2, 3], [1, 2, 2]])
-    calc.use_bands1(bands1)
-    # from aiida.orm.data.base import Int
-    calc.use_bands2(bands2)
 
-    calc.set_resources(dict(num_machines=1, tot_num_mpiprocs=1))
-    calc.set_withmpi(False)
-    calc.set_computer(Computer.get(name='localhost'))
-    calc.store_all()
-    calc.submit()
-    print('Submitted calculation', calc.pk)
+    builder.bands1 = bands1
+    builder.bands2 = bands2
+
+    output = run(builder)
+    print('Difference:', output['difference'])
 
 
 if __name__ == '__main__':
-    run()
+    main()
