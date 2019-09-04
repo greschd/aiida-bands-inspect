@@ -8,6 +8,8 @@ from fsc.export import export
 from aiida.plugins import DataFactory
 from aiida.parsers.parser import Parser
 
+from ..calculations.plot import PlotCalculation
+
 
 @export
 class PlotParser(Parser):
@@ -22,14 +24,14 @@ class PlotParser(Parser):
 
     def parse(self, **kwargs):
         try:
-            out_folder = retrieved[self._calc._get_linkname_retrieved()]
+            out_folder = self.retrieved
         except KeyError as e:
             self.logger.error("No retrieved folder found")
             raise e
 
-        res = DataFactory('singlefile')()
-        res.add_path(out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME))
-
-        new_nodes_list = [('plot', res)]
-
-        return True, new_nodes_list
+        self.out(
+            'plot',
+            DataFactory('singlefile')(
+                out_folder.open(PlotCalculation._OUTPUT_FILE_NAME, 'rb')
+            )
+        )
