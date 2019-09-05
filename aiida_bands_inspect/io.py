@@ -12,13 +12,13 @@ import numpy as np
 from aiida.plugins import DataFactory
 
 
-def write_kpoints(kpoints_data, filename):
+def write_kpoints(kpoints_data, *args, **kwargs):
     """
-    Write a 'KpointsData' instance to a file in bands_inspect HDF5 format.
+    Write a 'KpointsData' instance to a file or file-like object in bands_inspect HDF5 format. Except for ``kpoints_data``, all positional and keyword arguments are passed to :class:`h5py.File`.
     """
     # This can be replaced with bands_inspect.io functions when
     # AiiDA supports Python 3.
-    with h5py.File(filename, 'w') as f:
+    with h5py.File(*args, **kwargs) as f:
         _serialize_kpoints(kpoints_data, f)
 
 
@@ -37,11 +37,11 @@ def _serialize_kpoints(kpoints_data, hdf5_handle):
         )
 
 
-def read_bands(filename):
+def read_bands(*args, **kwargs):
     """
-    Read a HDF5 in bands_inspect HDF5 format containing an EigenvalsData instance, and return an AiiDA BandsData instance.
+    Read a HDF5 in bands_inspect HDF5 format containing an EigenvalsData instance, and return an AiiDA BandsData instance. Positional and keyword arguments are passed to :class:`h5py.File`.
     """
-    with h5py.File(filename, 'r') as f:
+    with h5py.File(*args, **kwargs) as f:
         kpoints = _parse_kpoints(f['kpoints_obj'])
         # BandsData cannot have a mesh as k-points...
         bands = DataFactory('array.bands')()

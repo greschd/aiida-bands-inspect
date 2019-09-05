@@ -23,11 +23,13 @@ class BandsParser(Parser):
 
     def parse(self, **kwargs):
         try:
-            out_folder = retrieved[self._calc._get_linkname_retrieved()]
+            out_folder = self.retrieved
         except KeyError:
             self.logger.error("No retrieved folder found")
 
-        bands_file = out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME)
-        new_nodes_list = [('bands', read_bands(bands_file))]
-
-        return True, new_nodes_list
+        self.out(
+            'bands',
+            read_bands(
+                out_folder.open(self.node.get_option('output_filename'), 'r+b')
+            )
+        )
