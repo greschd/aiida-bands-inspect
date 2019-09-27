@@ -5,8 +5,8 @@ python:
 cache: pip
 sudo: true
 services:
-  - postgresql
   - rabbitmq
+  - postgresql
 addons:
   apt:
     packages:
@@ -17,8 +17,8 @@ addons:
       - python3-scipy
       - python3-matplotlib
       - python3-h5py
-  postgresql: "9.5"
 before_install:
+  - sudo service postgresql restart
   - sudo pip3 install -U setuptools
   - sudo pip3 install bands-inspect
 install:
