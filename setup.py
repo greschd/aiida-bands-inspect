@@ -28,5 +28,6 @@ if __name__ == '__main__':
                 os.path.dirname(os.path.abspath(__file__)), 'README.md'
             )
         ).read(),
+        long_description_content_type="text/markdown",
         **SETUP_KWARGS
     )

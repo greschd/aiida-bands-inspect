@@ -34,7 +34,7 @@
   "extras_require": {
     "dev": [
       "numpy",
-      "aiida-pytest",
+      "aiida-pytest>=0.1.0a4",
       "pytest",
       "yapf==0.25",
       "pre-commit"
