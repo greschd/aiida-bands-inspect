@@ -30,6 +30,8 @@ class BandsParser(Parser):
         self.out(
             'bands',
             read_bands(
-                out_folder.open(self.node.get_option('output_filename'), 'r+b')
+                out_folder.open(
+                    self.node.get_option('output_filename'), 'r+b'
+                )
             )
         )

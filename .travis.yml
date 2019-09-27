@@ -17,6 +17,7 @@ addons:
       - python3-scipy
       - python3-matplotlib
       - python3-h5py
+      - rabbitmq-server
 before_install:
   - sudo service postgresql restart
   - sudo pip3 install -U setuptools

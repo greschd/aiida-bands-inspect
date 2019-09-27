@@ -10,6 +10,7 @@ from aiida.parsers.parser import Parser
 
 from ..calculations.difference import DifferenceCalculation
 
+
 @export
 class DifferenceParser(Parser):
     """

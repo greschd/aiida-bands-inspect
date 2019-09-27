@@ -60,12 +60,8 @@ class DifferenceCalculation(CalcJob):
     def prepare_for_submission(self, tempfolder):
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
-        write_bands(
-            self.inputs.bands1, tempfolder.get_abs_path(ev1_filename)
-        )
-        write_bands(
-            self.inputs.bands2, tempfolder.get_abs_path(ev2_filename)
-        )
+        write_bands(self.inputs.bands1, tempfolder.get_abs_path(ev1_filename))
+        write_bands(self.inputs.bands2, tempfolder.get_abs_path(ev2_filename))
 
         code = self.inputs.code
 

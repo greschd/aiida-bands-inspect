@@ -65,13 +65,9 @@ class PlotCalculation(CalcJob):
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
         eigenval_file_1 = tempfolder.get_abs_path(ev1_filename)
-        write_bands(
-            self.inputs.bands1, eigenval_file_1
-        )
+        write_bands(self.inputs.bands1, eigenval_file_1)
         eigenval_file_2 = tempfolder.get_abs_path(ev2_filename)
-        write_bands(
-            self.inputs.bands2, eigenval_file_2
-        )
+        write_bands(self.inputs.bands2, eigenval_file_2)
 
         calcinfo = CalcInfo()
         calcinfo.uuid = self.uuid

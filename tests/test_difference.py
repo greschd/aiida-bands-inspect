@@ -46,10 +46,10 @@ def test_difference(configure_with_daemon, get_bands_builder):
     print('State:', calc_node.get_state())
     print('Output:', output)
     print(
-        subprocess.check_output([
-            "verdi", "process", "report", "{}".format(calc_node.pk)
-        ],
-                                stderr=subprocess.STDOUT)
+        subprocess.check_output(
+            ["verdi", "process", "report", "{}".format(calc_node.pk)],
+            stderr=subprocess.STDOUT
+        )
     )
     assert np.isclose(output['difference'].value, 1 / 3)
 
