@@ -20,7 +20,6 @@ class BandsParser(Parser):
     bands : aiida.orm.data.array.bands.BandsData
         Retrieved band structure.
     """
-
     def parse(self, **kwargs):
         try:
             out_folder = self.retrieved

@@ -21,7 +21,6 @@ class PlotParser(Parser):
     plot : aiida.orm.data.singlefile.SinglefileData
         File containing the generated plot.
     """
-
     def parse(self, **kwargs):
         try:
             out_folder = self.retrieved

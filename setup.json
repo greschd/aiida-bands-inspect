@@ -36,7 +36,7 @@
       "numpy",
       "aiida-pytest>=0.1.0a4",
       "pytest",
-      "yapf==0.25",
+      "yapf==0.28",
       "pre-commit"
     ]
   },

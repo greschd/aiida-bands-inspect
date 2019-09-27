@@ -21,7 +21,6 @@ class DifferenceParser(Parser):
     difference : aiida.orm.data.base.Float
         The calculated average difference.
     """
-
     def parse(self, **kwargs):
         try:
             out_folder = self.retrieved
