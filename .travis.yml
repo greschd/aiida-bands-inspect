@@ -23,8 +23,8 @@ before_install:
   - sudo pip3 install bands-inspect
 install:
   - pip install -U 'pip<19' wheel setuptools
-  - pip install git+https://github.com/greschd/aiida_pytest@migrate_v1#egg=aiida_pytest
   - pip install .[dev]
+  - reentry scan
 env:
   - TEST_TYPE="pre-commit"
   - TEST_TYPE="tests"
