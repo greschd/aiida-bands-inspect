@@ -6,13 +6,14 @@
   "url": "https://aiida-bands-inspect.readthedocs.io",
   "license": "Apache 2.0",
   "classifiers": [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Environment :: Plugins",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3.6",
-    "Topic :: Scientific/Engineering :: Physics"
+    "Topic :: Scientific/Engineering :: Physics",
+    "Framework :: AiiDA"
   ],
   "keywords": [
     "bandstructure",
@@ -26,15 +27,16 @@
   "reentry_register": true,
   "install_requires": [
     "h5py",
-    "aiida-core>=1.0.0a4",
-    "fsc.export"
+    "aiida-core>=1.0.0a4,<2.0.0",
+    "fsc.export",
+    "six"
   ],
   "extras_require": {
     "dev": [
       "numpy",
-      "aiida-pytest",
+      "aiida-pytest>=0.1.0a4",
       "pytest",
-      "yapf==0.25",
+      "yapf==0.28",
       "pre-commit"
     ]
   },

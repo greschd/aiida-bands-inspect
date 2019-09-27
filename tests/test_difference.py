@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# © 2019, Microsoft
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
@@ -11,12 +12,11 @@ import subprocess
 
 import pytest
 import numpy as np
-from aiida_pytest.markers import skip_caching
 
 
 @pytest.fixture
 def get_bands_builder(get_process_builder):
-    from aiida.orm import DataFactory
+    from aiida.plugins import DataFactory
 
     builder = get_process_builder(
         calculation_string='bands_inspect.difference',
@@ -38,7 +38,7 @@ def get_bands_builder(get_process_builder):
 
 
 def test_difference(configure_with_daemon, get_bands_builder):
-    from aiida.work.launch import run_get_node
+    from aiida.engine.launch import run_get_node
     from aiida.orm import load_node
 
     builder = get_bands_builder
@@ -47,20 +47,19 @@ def test_difference(configure_with_daemon, get_bands_builder):
     print('Output:', output)
     print(
         subprocess.check_output([
-            "verdi", "calculation", "logshow", "{}".format(calc_node.pk)
+            "verdi", "process", "report", "{}".format(calc_node.pk)
         ],
                                 stderr=subprocess.STDOUT)
     )
     assert np.isclose(output['difference'].value, 1 / 3)
 
 
-@skip_caching
 def test_difference_cache(
     configure_with_daemon, get_bands_builder, assert_outputs_equal
 ):
-    from aiida.work.launch import run_get_node
+    from aiida.engine.launch import run_get_node
     from aiida.orm import load_node
-    from aiida.common.caching import enable_caching
+    from aiida.manage.caching import enable_caching
 
     builder = get_bands_builder
 
@@ -69,5 +68,5 @@ def test_difference_cache(
         output1, c1 = run_get_node(builder)
         output2, c2 = run_get_node(builder)
     c1.get_hash(ignore_errors=False)
-    assert '_aiida_cached_from' in c2.extras()
+    assert '_aiida_cached_from' in c2.extras
     assert output1['difference'] == output2['difference']

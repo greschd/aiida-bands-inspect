@@ -5,7 +5,7 @@
 
 from fsc.export import export
 
-from aiida.orm import DataFactory
+from aiida.plugins import DataFactory
 from aiida.parsers.parser import Parser
 from ..io import read_bands
 
@@ -20,14 +20,17 @@ class BandsParser(Parser):
     bands : aiida.orm.data.array.bands.BandsData
         Retrieved band structure.
     """
-
-    def parse_with_retrieved(self, retrieved):
+    def parse(self, **kwargs):
         try:
-            out_folder = retrieved[self._calc._get_linkname_retrieved()]
+            out_folder = self.retrieved
         except KeyError:
             self.logger.error("No retrieved folder found")
 
-        bands_file = out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME)
-        new_nodes_list = [('bands', read_bands(bands_file))]
-
-        return True, new_nodes_list
+        self.out(
+            'bands',
+            read_bands(
+                out_folder.open(
+                    self.node.get_option('output_filename'), 'r+b'
+                )
+            )
+        )

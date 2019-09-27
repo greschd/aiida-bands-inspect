@@ -6,18 +6,21 @@
 Defines a calculation to run the ``bands-inspect difference`` command.
 """
 
+import six
+
 from fsc.export import export
 
-from aiida.orm import JobCalculation, DataFactory
-from aiida.common.utils import classproperty
-from aiida.common.exceptions import InputValidationError
-from aiida.common.datastructures import CalcInfo, CodeInfo
+from aiida.engine import CalcJob
+from aiida.common import InputValidationError
+from aiida.common import CalcInfo, CodeInfo
+from aiida.orm import Float
+from aiida.plugins import DataFactory
 
 from ..io import write_bands
 
 
 @export
-class DifferenceCalculation(JobCalculation):
+class DifferenceCalculation(CalcJob):
     """
     Calculation class for the ``bands-inspect difference`` command.
 
@@ -29,52 +32,50 @@ class DifferenceCalculation(JobCalculation):
         Second band structure to compare.
     """
 
-    def _init_internal_params(self):
-        super(DifferenceCalculation, self)._init_internal_params()
+    _OUTPUT_FILE_NAME = 'diff.txt'
 
-        self._OUTPUT_FILE_NAME = 'diff.txt'
-        self._default_parser = 'bands_inspect.difference'
+    @classmethod
+    def define(cls, spec):
+        super(DifferenceCalculation, cls).define(spec)
 
-    @classproperty
-    def _use_methods(cls):
-        retdict = super(cls, cls)._use_methods
-        retdict['bands1'] = dict(
-            valid_types=DataFactory('array.bands'),
-            additional_parameter=None,
-            linkname='bands1',
-            docstring="First bandstructure which is to be compared"
+        spec.input(
+            'bands1',
+            valid_type=DataFactory('array.bands'),
+            help='First bandstructure which is to be compared'
         )
-        retdict['bands2'] = dict(
-            valid_types=DataFactory('array.bands'),
-            additional_parameter=None,
-            linkname='bands2',
-            docstring="Second bandstructures which is to be compared"
+        spec.input(
+            'bands2',
+            valid_type=DataFactory('array.bands'),
+            help='Second bandstructure which is to be compared'
         )
-        return retdict
 
-    def _prepare_for_submission(self, tempfolder, inputdict):
+        spec.input(
+            'metadata.options.parser_name',
+            valid_type=six.string_types,
+            default='bands_inspect.difference'
+        )
+
+        spec.output('difference', valid_type=Float)
+
+        spec.exit_code(
+            200,
+            'ERROR_NO_RETRIEVED_FOLDER',
+            message='The retrieved folder data node could not be accessed.'
+        )
+        spec.exit_code(
+            210,
+            'ERROR_OUTPUT_FILE_MISSING',
+            message=
+            'The retrieved folder does not contain the difference output file.'
+        )
+
+    def prepare_for_submission(self, tempfolder):
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
-        eigenval_file_1 = tempfolder.get_abs_path(ev1_filename)
-        write_bands(
-            inputdict.pop(self.get_linkname('bands1')), eigenval_file_1
-        )
-        eigenval_file_2 = tempfolder.get_abs_path(ev2_filename)
-        write_bands(
-            inputdict.pop(self.get_linkname('bands2')), eigenval_file_2
-        )
+        write_bands(self.inputs.bands1, tempfolder.get_abs_path(ev1_filename))
+        write_bands(self.inputs.bands2, tempfolder.get_abs_path(ev2_filename))
 
-        try:
-            code = inputdict.pop(self.get_linkname('code'))
-        except KeyError:
-            raise InputValidationError(
-                'No code specified for this calculation.'
-            )
-        if inputdict:
-            raise ValidationError(
-                'Cannot add other nodes. Remaining input: {}'.
-                format(inputdict)
-            )
+        code = self.inputs.code
 
         calcinfo = CalcInfo()
         calcinfo.uuid = self.uuid

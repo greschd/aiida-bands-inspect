@@ -5,8 +5,10 @@
 
 from fsc.export import export
 
-from aiida.orm import DataFactory
+from aiida.plugins import DataFactory
 from aiida.parsers.parser import Parser
+
+from ..calculations.plot import PlotCalculation
 
 
 @export
@@ -19,17 +21,16 @@ class PlotParser(Parser):
     plot : aiida.orm.data.singlefile.SinglefileData
         File containing the generated plot.
     """
-
-    def parse_with_retrieved(self, retrieved):
+    def parse(self, **kwargs):
         try:
-            out_folder = retrieved[self._calc._get_linkname_retrieved()]
+            out_folder = self.retrieved
         except KeyError as e:
-            self.logger.error("No retrieved folder found")
-            raise e
+            return self.exit_codes.ERROR_NO_RETRIEVED_FOLDER
 
-        res = DataFactory('singlefile')()
-        res.add_path(out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME))
-
-        new_nodes_list = [('plot', res)]
-
-        return True, new_nodes_list
+        try:
+            with out_folder.open(
+                PlotCalculation._OUTPUT_FILE_NAME, 'rb'
+            ) as handle:
+                self.out('plot', DataFactory('singlefile')(file=handle))
+        except IOError:
+            return self.exit_codes.ERROR_OUTPUT_FILE_MISSING

@@ -5,8 +5,10 @@
 
 from fsc.export import export
 
-from aiida.orm.data.base import Float
+from aiida.orm import Float
 from aiida.parsers.parser import Parser
+
+from ..calculations.difference import DifferenceCalculation
 
 
 @export
@@ -19,19 +21,18 @@ class DifferenceParser(Parser):
     difference : aiida.orm.data.base.Float
         The calculated average difference.
     """
-
-    def parse_with_retrieved(self, retrieved):
+    def parse(self, **kwargs):
         try:
-            out_folder = retrieved[self._calc._get_linkname_retrieved()]
+            out_folder = self.retrieved
         except KeyError as e:
-            self.logger.error("No retrieved folder found")
-            raise e
+            return self.exit_codes.ERROR_NO_RETRIEVED_FOLDER
 
-        with open(
-            out_folder.get_abs_path(self._calc._OUTPUT_FILE_NAME), 'r'
-        ) as f:
-            res = float(f.read())
+        try:
+            with out_folder.open(
+                DifferenceCalculation._OUTPUT_FILE_NAME, 'r'
+            ) as f:
+                res = float(f.read())
+        except IOError:
+            return self.exit_codes.ERROR_OUTPUT_FILE_MISSING
 
-        new_nodes_list = [('difference', Float(res))]
-
-        return True, new_nodes_list
+        self.out('difference', Float(res))

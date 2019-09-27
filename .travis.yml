@@ -2,11 +2,12 @@ language: python
 python:
   - "2.7"
   - "3.6"
+  - "3.7"
 cache: pip
 sudo: true
 services:
-  - postgresql
   - rabbitmq
+  - postgresql
 addons:
   apt:
     packages:
@@ -17,15 +18,15 @@ addons:
       - python3-scipy
       - python3-matplotlib
       - python3-h5py
-  postgresql: "9.5"
+      - rabbitmq-server
 before_install:
-  - sudo pip3 install -U setuptools
-  - sudo pip3 install git+https://github.com/Z2PackDev/bands_inspect.git#egg=bands-inspect
+  - sudo service postgresql restart
+  - sudo pip3 install -U setuptools matplotlib
+  - sudo pip3 install bands-inspect
 install:
   - pip install -U 'pip<19' wheel setuptools
-  - pip install git+https://github.com/aiidateam/aiida_core@v1.0.0a4#egg=aiida_core
-  - pip install git+https://github.com/greschd/aiida_pytest@support_alpha_4#egg=aiida_pytest
   - pip install .[dev]
+  - reentry scan
 env:
   - TEST_TYPE="pre-commit"
   - TEST_TYPE="tests"

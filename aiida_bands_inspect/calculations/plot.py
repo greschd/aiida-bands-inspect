@@ -6,18 +6,21 @@
 Defines the a calculation class for the ``bands-inspect plot`` command.
 """
 
+import six
+
 from fsc.export import export
 
-from aiida.orm import JobCalculation, DataFactory
+from aiida.engine import CalcJob
 from aiida.common.utils import classproperty
-from aiida.common.exceptions import InputValidationError
-from aiida.common.datastructures import CalcInfo, CodeInfo
+from aiida.common import InputValidationError
+from aiida.common import CalcInfo, CodeInfo
+from aiida.plugins import DataFactory
 
 from ..io import write_bands
 
 
 @export
-class PlotCalculation(JobCalculation):
+class PlotCalculation(CalcJob):
     """
     Calculation class for the ``bands_inspect plot`` command.
 
@@ -29,52 +32,53 @@ class PlotCalculation(JobCalculation):
         Second band structure to plot.
     """
 
-    def _init_internal_params(self):
-        super(PlotCalculation, self)._init_internal_params()
+    _OUTPUT_FILE_NAME = 'plot.pdf'
 
-        self._OUTPUT_FILE_NAME = 'plot.pdf'
-        self._default_parser = 'bands_inspect.plot'
+    @classmethod
+    def define(cls, spec):
+        super(PlotCalculation, cls).define(spec)
 
-    @classproperty
-    def _use_methods(cls):
-        retdict = super(cls, cls)._use_methods
-        retdict['bands1'] = dict(
-            valid_types=DataFactory('array.bands'),
-            additional_parameter=None,
-            linkname='bands1',
-            docstring="First bandstructure which is to be plotted"
+        spec.input(
+            'bands1',
+            valid_type=DataFactory('array.bands'),
+            help="First bandstructure which is to be plotted"
         )
-        retdict['bands2'] = dict(
-            valid_types=DataFactory('array.bands'),
-            additional_parameter=None,
-            linkname='bands2',
-            docstring="Second bandstructures which is to be plotted"
+        spec.input(
+            'bands2',
+            valid_type=DataFactory('array.bands'),
+            help="Second bandstructure which is to be plotted"
         )
-        return retdict
 
-    def _prepare_for_submission(self, tempfolder, inputdict):
+        spec.input(
+            'metadata.options.parser_name',
+            valid_type=six.string_types,
+            default='bands_inspect.plot'
+        )
+
+        spec.output(
+            'plot',
+            valid_type=DataFactory('singlefile'),
+            help='The created band-structure comparison plot.'
+        )
+
+        spec.exit_code(
+            200,
+            'ERROR_NO_RETRIEVED_FOLDER',
+            message='The retrieved folder data node could not be accessed.'
+        )
+        spec.exit_code(
+            210,
+            'ERROR_OUTPUT_FILE_MISSING',
+            message='The retrieved folder does not contain the plot output file.'
+        )
+
+    def prepare_for_submission(self, tempfolder):
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
         eigenval_file_1 = tempfolder.get_abs_path(ev1_filename)
-        write_bands(
-            inputdict.pop(self.get_linkname('bands1')), eigenval_file_1
-        )
+        write_bands(self.inputs.bands1, eigenval_file_1)
         eigenval_file_2 = tempfolder.get_abs_path(ev2_filename)
-        write_bands(
-            inputdict.pop(self.get_linkname('bands2')), eigenval_file_2
-        )
-
-        try:
-            code = inputdict.pop(self.get_linkname('code'))
-        except KeyError:
-            raise InputValidationError(
-                'No code specified for this calculation.'
-            )
-        if inputdict:
-            raise ValidationError(
-                'Cannot add other nodes. Remaining input: {}'.
-                format(inputdict)
-            )
+        write_bands(self.inputs.bands2, eigenval_file_2)
 
         calcinfo = CalcInfo()
         calcinfo.uuid = self.uuid
@@ -82,9 +86,8 @@ class PlotCalculation(JobCalculation):
         calcinfo.retrieve_list = [self._OUTPUT_FILE_NAME]
 
         codeinfo = CodeInfo()
-        codeinfo.cmdline_params = ['plot_bands', ev1_filename, ev2_filename]
-        codeinfo.stdout_name = self._OUTPUT_FILE_NAME
-        codeinfo.code_uuid = code.uuid
+        codeinfo.cmdline_params = ['plot-bands', ev1_filename, ev2_filename]
+        codeinfo.code_uuid = self.inputs.code.uuid
         calcinfo.codes_info = [codeinfo]
 
         return calcinfo
