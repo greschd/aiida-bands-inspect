@@ -25,10 +25,12 @@ class PlotParser(Parser):
         try:
             out_folder = self.retrieved
         except KeyError as e:
-            self.logger.error("No retrieved folder found")
-            raise e
+            return self.exit_codes.ERROR_NO_RETRIEVED_FOLDER
 
-        with out_folder.open(
-            PlotCalculation._OUTPUT_FILE_NAME, 'rb'
-        ) as handle:
-            self.out('plot', DataFactory('singlefile')(file=handle))
+        try:
+            with out_folder.open(
+                PlotCalculation._OUTPUT_FILE_NAME, 'rb'
+            ) as handle:
+                self.out('plot', DataFactory('singlefile')(file=handle))
+        except IOError:
+            return self.exit_codes.ERROR_OUTPUT_FILE_MISSING

@@ -57,6 +57,18 @@ class DifferenceCalculation(CalcJob):
 
         spec.output('difference', valid_type=Float)
 
+        spec.exit_code(
+            200,
+            'ERROR_NO_RETRIEVED_FOLDER',
+            message='The retrieved folder data node could not be accessed.'
+        )
+        spec.exit_code(
+            210,
+            'ERROR_OUTPUT_FILE_MISSING',
+            message=
+            'The retrieved folder does not contain the difference output file.'
+        )
+
     def prepare_for_submission(self, tempfolder):
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'

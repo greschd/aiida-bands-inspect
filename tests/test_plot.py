@@ -37,5 +37,9 @@ def test_plot(configure_with_daemon, get_plot_builder):
 
     builder = get_plot_builder
     output = run(builder)
+    print(
+        'scheduler error file:\n',
+        output['retrieved'].open('_scheduler-stderr.txt').read()
+    )
     assert 'plot' in output
     assert isinstance(output['plot'], DataFactory('singlefile'))

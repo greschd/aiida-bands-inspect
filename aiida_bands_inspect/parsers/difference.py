@@ -25,12 +25,14 @@ class DifferenceParser(Parser):
         try:
             out_folder = self.retrieved
         except KeyError as e:
-            self.logger.error("No retrieved folder found")
-            raise e
+            return self.exit_codes.ERROR_NO_RETRIEVED_FOLDER
 
-        with out_folder.open(
-            DifferenceCalculation._OUTPUT_FILE_NAME, 'r'
-        ) as f:
-            res = float(f.read())
+        try:
+            with out_folder.open(
+                DifferenceCalculation._OUTPUT_FILE_NAME, 'r'
+            ) as f:
+                res = float(f.read())
+        except IOError:
+            return self.exit_codes.ERROR_OUTPUT_FILE_MISSING
 
         self.out('difference', Float(res))
