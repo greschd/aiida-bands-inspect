@@ -62,7 +62,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'aiida-bands-inspect'
-copyright = u'2018, Dominik Gresch'
+copyright = u'2017-2019, ETH Zurich'
 author = u'Dominik Gresch'
 
 # The version info for the project you're documenting, acts as replacement for
