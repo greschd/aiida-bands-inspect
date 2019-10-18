@@ -27,7 +27,7 @@
   "reentry_register": true,
   "install_requires": [
     "h5py",
-    "aiida-core>=1.0.0a4,<2.0.0",
+    "aiida-core>=1.0.0b6,<2.0.0",
     "fsc.export",
     "six"
   ],
