@@ -1,2 +1,2 @@
-aiida-core>=1.0.0a1
+aiida-core>=1.0.0b6
 fsc.export
