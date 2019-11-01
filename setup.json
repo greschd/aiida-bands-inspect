@@ -38,6 +38,10 @@
       "pytest",
       "yapf==0.28",
       "pre-commit"
+    ],
+    "docs": [
+      "sphinx",
+      "sphinx-rtd-theme"
     ]
   },
   "entry_points": {
