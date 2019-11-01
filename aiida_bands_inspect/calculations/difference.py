@@ -10,11 +10,10 @@ import six
 
 from fsc.export import export
 
+from aiida import orm
 from aiida.engine import CalcJob
 from aiida.common import InputValidationError
 from aiida.common import CalcInfo, CodeInfo
-from aiida.orm import Float
-from aiida.plugins import DataFactory
 
 from ..io import write_bands
 
@@ -40,12 +39,12 @@ class DifferenceCalculation(CalcJob):
 
         spec.input(
             'bands1',
-            valid_type=DataFactory('array.bands'),
+            valid_type=orm.BandsData,
             help='First bandstructure which is to be compared'
         )
         spec.input(
             'bands2',
-            valid_type=DataFactory('array.bands'),
+            valid_type=orm.BandsData,
             help='Second bandstructure which is to be compared'
         )
 
@@ -55,7 +54,7 @@ class DifferenceCalculation(CalcJob):
             default='bands_inspect.difference'
         )
 
-        spec.output('difference', valid_type=Float)
+        spec.output('difference', valid_type=orm.Float)
 
         spec.exit_code(
             200,
