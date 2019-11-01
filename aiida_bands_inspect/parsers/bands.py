@@ -5,7 +5,6 @@
 
 from fsc.export import export
 
-from aiida.plugins import DataFactory
 from aiida.parsers.parser import Parser
 from ..io import read_bands
 
