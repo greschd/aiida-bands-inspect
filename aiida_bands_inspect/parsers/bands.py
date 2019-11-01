@@ -25,11 +25,7 @@ class BandsParser(Parser):
         except KeyError:
             self.logger.error("No retrieved folder found")
 
-        self.out(
-            'bands',
-            read_bands(
-                out_folder.open(
-                    self.node.get_option('output_filename'), 'r+b'
-                )
-            )
-        )
+        with out_folder.open(
+            self.node.get_option('output_filename'), 'r+b'
+        ) as out_file:
+            self.out('bands', read_bands(out_file))
