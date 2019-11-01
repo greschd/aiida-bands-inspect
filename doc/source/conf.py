@@ -46,6 +46,11 @@ else:
     # Finally load the database backend but without checking the schema because there is no actual database
     get_manager()._load_backend(schema_check=False)
 
+    # make sure all entry-points are detected, since readthedocs doesn't expose a way to do this
+    # during post-install.
+    import reentry
+    reentry.manager.scan()
+
 import aiida_bands_inspect
 
 # -- General configuration ------------------------------------------------
