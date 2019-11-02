@@ -18,7 +18,7 @@ class PlotParser(Parser):
 
     Returns
     -------
-    plot : aiida.orm.data.singlefile.SinglefileData
+    plot : aiida.orm.nodes.data.singlefile.SinglefileData
         File containing the generated plot.
     """
     def parse(self, **kwargs):

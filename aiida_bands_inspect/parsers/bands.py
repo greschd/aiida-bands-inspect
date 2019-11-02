@@ -16,7 +16,7 @@ class BandsParser(Parser):
 
     Returns
     -------
-    bands : aiida.orm.data.array.bands.BandsData
+    bands : aiida.orm.nodes.data.array.bands.BandsData
         Retrieved band structure.
     """
     def parse(self, **kwargs):
