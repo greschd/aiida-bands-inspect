@@ -6,8 +6,6 @@
 Defines the a calculation class for the ``bands-inspect plot`` command.
 """
 
-import six
-
 from fsc.export import export
 
 from aiida import orm
@@ -51,7 +49,7 @@ class PlotCalculation(CalcJob):
 
         spec.input(
             'metadata.options.parser_name',
-            valid_type=six.string_types,
+            valid_type=str,
             default='bands_inspect.plot'
         )
 

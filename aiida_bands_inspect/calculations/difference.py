@@ -6,8 +6,6 @@
 Defines a calculation to run the ``bands-inspect difference`` command.
 """
 
-import six
-
 from fsc.export import export
 
 from aiida import orm
@@ -50,7 +48,7 @@ class DifferenceCalculation(CalcJob):
 
         spec.input(
             'metadata.options.parser_name',
-            valid_type=six.string_types,
+            valid_type=str,
             default='bands_inspect.difference'
         )
 
