@@ -31,7 +31,7 @@ def get_plot_builder(get_process_builder):
     return builder
 
 
-def test_plot(configure_with_daemon, get_plot_builder):
+def test_plot(configure_with_daemon, get_plot_builder):  # pylint: disable=unused-argument
     from aiida.engine.launch import run
     from aiida.plugins import DataFactory
 

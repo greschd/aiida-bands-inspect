@@ -4,3 +4,22 @@ repos:
   hooks:
   - id: yapf
     language: system
+- repo: local
+  hooks:
+  - id: prospector
+    name: prospector
+    entry: prospector
+    types: [file, python]
+    language: system
+    exclude: '^(doc/)|(examples/)|(futures/)'
+  - id: version-number
+    name: Check version numbers
+    entry: python ./utils/validate_version_consistency.py
+    language: system
+    files: >-
+      (?x)^(
+        setup.json|
+        utils/validate_version_consistency.py|
+        aiida_bands_inspect/__init__.py
+      )$
+    pass_filenames: false
