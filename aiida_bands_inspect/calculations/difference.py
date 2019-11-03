@@ -23,9 +23,9 @@ class DifferenceCalculation(CalcJob):
 
     Arguments
     ---------
-    bands1 : aiida.orm.data.array.bands.BandsData
+    bands1 : aiida.orm.nodes.data.array.bands.BandsData
         First band structure to compare.
-    bands2 : aiida.orm.data.array.bands.BandsData
+    bands2 : aiida.orm.nodes.data.array.bands.BandsData
         Second band structure to compare.
     """
 

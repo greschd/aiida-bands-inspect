@@ -18,7 +18,7 @@ class DifferenceParser(Parser):
 
     Returns
     -------
-    difference : aiida.orm.data.base.Float
+    difference : aiida.orm.nodes.data.float.Float
         The calculated average difference.
     """
     def parse(self, **kwargs):
