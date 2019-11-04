@@ -27,17 +27,21 @@
   ],
   "reentry_register": true,
   "install_requires": [
+    "numpy",
     "h5py",
     "aiida-core>=1.0.0b6,<2.0.0",
     "fsc.export"
   ],
   "extras_require": {
-    "dev": [
-      "numpy",
+    "testing": [
       "aiida-pytest>=0.1.0a6",
-      "pytest",
+      "pytest"
+    ],
+    "dev_precommit": [
       "yapf==0.28",
-      "pre-commit"
+      "pre-commit",
+      "prospector==1.1.7",
+      "pylint==2.3.1"
     ],
     "docs": [
       "sphinx",
