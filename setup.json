@@ -47,8 +47,7 @@
     ],
     "docs": [
       "sphinx",
-      "sphinx-rtd-theme",
-      "sphinxcontrib-details-directive"
+      "sphinx-rtd-theme"
     ]
   },
   "entry_points": {
