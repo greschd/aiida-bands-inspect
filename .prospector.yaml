@@ -1,0 +1,11 @@
+pylint:
+  run: true
+
+pyflakes:
+  run: false
+
+pep8:
+  run: false
+
+mccabe:
+  run: false
