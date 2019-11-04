@@ -16,7 +16,7 @@ import numpy as np
         'eigenvals': [[0, 1., 2.]]
     }]
 )
-def test_write_read(configure, bands_params):
+def test_write_read(configure, bands_params):  # pylint: disable=unused-argument
     from aiida.plugins import DataFactory
     from aiida_bands_inspect.io import read_bands, write_bands
     BandsData = DataFactory('array.bands')
@@ -30,7 +30,7 @@ def test_write_read(configure, bands_params):
     assert np.allclose(res.get_bands(), bands.get_bands())
 
 
-def test_read(configure, sample):
+def test_read(configure, sample):  # pylint: disable=unused-argument
     from aiida_bands_inspect.io import read_bands
     res = read_bands(sample('bands_mesh.hdf5'))
     assert np.allclose(res.get_kpoints(), [[0., 0., 0.], [0., 0., 0.5]])

@@ -10,8 +10,6 @@ from fsc.export import export
 
 from aiida import orm
 from aiida.engine import CalcJob
-from aiida.common.utils import classproperty
-from aiida.common import InputValidationError
 from aiida.common import CalcInfo, CodeInfo
 
 from ..io import write_bands
@@ -70,7 +68,7 @@ class PlotCalculation(CalcJob):
             message='The retrieved folder does not contain the plot output file.'
         )
 
-    def prepare_for_submission(self, tempfolder):
+    def prepare_for_submission(self, tempfolder):  # pylint: disable=arguments-differ
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
         eigenval_file_1 = tempfolder.get_abs_path(ev1_filename)

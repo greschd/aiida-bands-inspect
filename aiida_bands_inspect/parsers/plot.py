@@ -21,15 +21,16 @@ class PlotParser(Parser):
     plot : aiida.orm.nodes.data.singlefile.SinglefileData
         File containing the generated plot.
     """
-    def parse(self, **kwargs):
+    def parse(self, **kwargs):  # pylint: disable=inconsistent-return-statements
         try:
             out_folder = self.retrieved
-        except KeyError as e:
+        except KeyError:
             return self.exit_codes.ERROR_NO_RETRIEVED_FOLDER
 
         try:
             with out_folder.open(
-                PlotCalculation._OUTPUT_FILE_NAME, 'rb'
+                PlotCalculation._OUTPUT_FILE_NAME,  # pylint: disable=protected-access
+                'rb'
             ) as handle:
                 self.out('plot', DataFactory('singlefile')(file=handle))
         except IOError:
