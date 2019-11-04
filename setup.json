@@ -1,6 +1,7 @@
 {
   "name": "aiida-bands-inspect",
   "description": "AiiDA Plugin for running bands_inspect",
+  "version": "0.2.0",
   "author": "Dominik Gresch",
   "author_email": "greschd@gmx.ch",
   "url": "https://aiida-bands-inspect.readthedocs.io",
@@ -10,8 +11,9 @@
     "Environment :: Plugins",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License",
-    "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
     "Topic :: Scientific/Engineering :: Physics",
     "Framework :: AiiDA"
   ],
@@ -26,18 +28,26 @@
   ],
   "reentry_register": true,
   "install_requires": [
+    "numpy",
     "h5py",
-    "aiida-core>=1.0.0a4,<2.0.0",
-    "fsc.export",
-    "six"
+    "aiida-core>=1.0.0,<2.0.0",
+    "fsc.export"
   ],
   "extras_require": {
-    "dev": [
-      "numpy",
-      "aiida-pytest>=0.1.0a4",
-      "pytest",
+    "testing": [
+      "aiida-pytest>=0.1.0a6",
+      "pytest"
+    ],
+    "dev_precommit": [
       "yapf==0.28",
-      "pre-commit"
+      "pre-commit==1.20.0",
+      "prospector==1.1.7",
+      "pylint==2.3.1",
+      "pyflakes==1.6.0"
+    ],
+    "docs": [
+      "sphinx",
+      "sphinx-rtd-theme"
     ]
   },
   "entry_points": {

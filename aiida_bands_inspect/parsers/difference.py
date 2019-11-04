@@ -18,18 +18,19 @@ class DifferenceParser(Parser):
 
     Returns
     -------
-    difference : aiida.orm.data.base.Float
+    difference : aiida.orm.nodes.data.float.Float
         The calculated average difference.
     """
-    def parse(self, **kwargs):
+    def parse(self, **kwargs):  # pylint: disable=inconsistent-return-statements
         try:
             out_folder = self.retrieved
-        except KeyError as e:
+        except KeyError:
             return self.exit_codes.ERROR_NO_RETRIEVED_FOLDER
 
         try:
             with out_folder.open(
-                DifferenceCalculation._OUTPUT_FILE_NAME, 'r'
+                DifferenceCalculation._OUTPUT_FILE_NAME,  # pylint: disable=protected-access
+                'r'
             ) as f:
                 res = float(f.read())
         except IOError:
