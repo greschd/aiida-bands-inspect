@@ -62,7 +62,7 @@ def test_difference_cache(
     builder = get_bands_builder
 
     # Fast-forwarding is enabled in the configuration for DifferenceCalculation
-    with enable_caching():
+    with enable_caching():  # pylint: disable=not-context-manager
         output1, c1 = run_get_node(builder)
         output2, c2 = run_get_node(builder)
     c1.get_hash(ignore_errors=False)
