@@ -7,7 +7,6 @@
 
 from __future__ import division, unicode_literals, print_function
 
-import time
 import subprocess
 
 import pytest
@@ -37,9 +36,8 @@ def get_bands_builder(get_process_builder):
     return builder
 
 
-def test_difference(configure_with_daemon, get_bands_builder):
+def test_difference(configure_with_daemon, get_bands_builder):  # pylint: disable=unused-argument
     from aiida.engine.launch import run_get_node
-    from aiida.orm import load_node
 
     builder = get_bands_builder
     output, calc_node = run_get_node(builder)
@@ -55,16 +53,16 @@ def test_difference(configure_with_daemon, get_bands_builder):
 
 
 def test_difference_cache(
-    configure_with_daemon, get_bands_builder, assert_outputs_equal
+    configure_with_daemon,  # pylint: disable=unused-argument
+    get_bands_builder,
 ):
     from aiida.engine.launch import run_get_node
-    from aiida.orm import load_node
     from aiida.manage.caching import enable_caching
 
     builder = get_bands_builder
 
     # Fast-forwarding is enabled in the configuration for DifferenceCalculation
-    with enable_caching():
+    with enable_caching():  # pylint: disable=not-context-manager
         output1, c1 = run_get_node(builder)
         output2, c2 = run_get_node(builder)
     c1.get_hash(ignore_errors=False)

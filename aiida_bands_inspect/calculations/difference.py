@@ -6,15 +6,11 @@
 Defines a calculation to run the ``bands-inspect difference`` command.
 """
 
-import six
-
 from fsc.export import export
 
+from aiida import orm
 from aiida.engine import CalcJob
-from aiida.common import InputValidationError
 from aiida.common import CalcInfo, CodeInfo
-from aiida.orm import Float
-from aiida.plugins import DataFactory
 
 from ..io import write_bands
 
@@ -26,9 +22,9 @@ class DifferenceCalculation(CalcJob):
 
     Arguments
     ---------
-    bands1 : aiida.orm.data.array.bands.BandsData
+    bands1 : aiida.orm.nodes.data.array.bands.BandsData
         First band structure to compare.
-    bands2 : aiida.orm.data.array.bands.BandsData
+    bands2 : aiida.orm.nodes.data.array.bands.BandsData
         Second band structure to compare.
     """
 
@@ -40,22 +36,22 @@ class DifferenceCalculation(CalcJob):
 
         spec.input(
             'bands1',
-            valid_type=DataFactory('array.bands'),
+            valid_type=orm.BandsData,
             help='First bandstructure which is to be compared'
         )
         spec.input(
             'bands2',
-            valid_type=DataFactory('array.bands'),
+            valid_type=orm.BandsData,
             help='Second bandstructure which is to be compared'
         )
 
         spec.input(
             'metadata.options.parser_name',
-            valid_type=six.string_types,
+            valid_type=str,
             default='bands_inspect.difference'
         )
 
-        spec.output('difference', valid_type=Float)
+        spec.output('difference', valid_type=orm.Float)
 
         spec.exit_code(
             200,
@@ -69,7 +65,7 @@ class DifferenceCalculation(CalcJob):
             'The retrieved folder does not contain the difference output file.'
         )
 
-    def prepare_for_submission(self, tempfolder):
+    def prepare_for_submission(self, tempfolder):  # pylint: disable=arguments-differ
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
         write_bands(self.inputs.bands1, tempfolder.get_abs_path(ev1_filename))

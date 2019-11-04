@@ -6,15 +6,11 @@
 Defines the a calculation class for the ``bands-inspect plot`` command.
 """
 
-import six
-
 from fsc.export import export
 
+from aiida import orm
 from aiida.engine import CalcJob
-from aiida.common.utils import classproperty
-from aiida.common import InputValidationError
 from aiida.common import CalcInfo, CodeInfo
-from aiida.plugins import DataFactory
 
 from ..io import write_bands
 
@@ -26,9 +22,9 @@ class PlotCalculation(CalcJob):
 
     Arguments
     ---------
-    bands1 : aiida.orm.data.array.bands.BandsData
+    bands1 : aiida.orm.nodes.data.array.bands.BandsData
         First band structure to plot.
-    bands2 : aiida.orm.data.array.bands.BandsData
+    bands2 : aiida.orm.nodes.data.array.bands.BandsData
         Second band structure to plot.
     """
 
@@ -40,24 +36,24 @@ class PlotCalculation(CalcJob):
 
         spec.input(
             'bands1',
-            valid_type=DataFactory('array.bands'),
+            valid_type=orm.BandsData,
             help="First bandstructure which is to be plotted"
         )
         spec.input(
             'bands2',
-            valid_type=DataFactory('array.bands'),
+            valid_type=orm.BandsData,
             help="Second bandstructure which is to be plotted"
         )
 
         spec.input(
             'metadata.options.parser_name',
-            valid_type=six.string_types,
+            valid_type=str,
             default='bands_inspect.plot'
         )
 
         spec.output(
             'plot',
-            valid_type=DataFactory('singlefile'),
+            valid_type=orm.SinglefileData,
             help='The created band-structure comparison plot.'
         )
 
@@ -72,7 +68,7 @@ class PlotCalculation(CalcJob):
             message='The retrieved folder does not contain the plot output file.'
         )
 
-    def prepare_for_submission(self, tempfolder):
+    def prepare_for_submission(self, tempfolder):  # pylint: disable=arguments-differ
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
         eigenval_file_1 = tempfolder.get_abs_path(ev1_filename)
