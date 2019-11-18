@@ -52,7 +52,7 @@ class AlignParser(Parser):
 
         except FileNotFoundError:
             return self.exit_codes.ERROR_OUTPUT_FILE_MISSING
-        
+
         Float = DataFactory('float')
         try:
             shift_line, diff_line = [line.split() for line in out_lines]
@@ -62,4 +62,3 @@ class AlignParser(Parser):
             self.out('difference', Float(float(diff_line[1])))
         except AssertionError:
             return self.exit_codes.ERROR_OUTPUT_FILE_WRONG
-
