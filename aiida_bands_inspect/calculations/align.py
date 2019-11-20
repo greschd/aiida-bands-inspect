@@ -80,7 +80,7 @@ class AlignCalculation(CalcJob):
             message='The text output file content is not in the expected format.'
         )
 
-    def prepare_for_submission(self, tempfolder):
+    def prepare_for_submission(self, tempfolder):  # pylint: disable=arguments-differ
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
         write_bands(self.inputs.bands1, tempfolder.get_abs_path(ev1_filename))
