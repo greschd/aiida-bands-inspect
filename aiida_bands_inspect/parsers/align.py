@@ -14,7 +14,7 @@ from ..calculations.align import AlignCalculation
 @export
 class AlignParser(Parser):
     """
-    Parse output of the align command: The shifted eigenvals files to 
+    Parse output of the align command: The shifted eigenvals files to
     BandsData objects, and the difference and shift values to Float.
 
     Returns
@@ -28,7 +28,7 @@ class AlignParser(Parser):
     difference: Float
         The remaining difference between the two bandstructures.
     """
-    def parse(self, **kwargs):
+    def parse(self, **kwargs):  # pylint: disable=inconsistent-return-statements
         try:
             out_folder = self.retrieved
         except KeyError:
@@ -36,17 +36,20 @@ class AlignParser(Parser):
 
         try:
             with out_folder.open(
-                AlignCalculation._EV1_SHIFTED_FILENAME, 'r+b'
+                AlignCalculation._EV1_SHIFTED_FILENAME,  # pylint: disable=protected-access
+                'r+b'
             ) as ev1_shifted_file:
                 self.out('bands1_shifted', read_bands(ev1_shifted_file))
 
             with out_folder.open(
-                AlignCalculation._EV2_SHIFTED_FILENAME, 'r+b'
+                AlignCalculation._EV2_SHIFTED_FILENAME,  # pylint: disable=protected-access
+                'r+b'
             ) as ev2_shifted_file:
                 self.out('bands2_shifted', read_bands(ev2_shifted_file))
 
             with out_folder.open(
-                AlignCalculation._OUTPUT_FILE_NAME, 'r'
+                AlignCalculation._OUTPUT_FILE_NAME,  # pylint: disable=protected-access
+                'r'
             ) as file_handle:
                 out_lines = file_handle.readlines()
 
