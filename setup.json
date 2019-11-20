@@ -1,7 +1,7 @@
 {
   "name": "aiida-bands-inspect",
   "description": "AiiDA Plugin for running bands_inspect",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Dominik Gresch",
   "author_email": "greschd@gmx.ch",
   "url": "https://aiida-bands-inspect.readthedocs.io",
