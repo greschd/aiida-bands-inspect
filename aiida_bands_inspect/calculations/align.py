@@ -8,16 +8,15 @@ Defines a calculation to run the ``bands-inspect align`` command.
 
 import six
 
-from fsc.export import export
-
 from aiida.engine import CalcJob
 from aiida.common import CalcInfo, CodeInfo
 from aiida.plugins import DataFactory
 
 from ..io import write_bands
 
+__all__ = ('AlignCalculation', )
 
-@export
+
 class AlignCalculation(CalcJob):
     """
     Calculation class for the ``bands-inspect align`` command.

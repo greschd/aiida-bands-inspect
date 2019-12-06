@@ -3,13 +3,12 @@
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
-from fsc.export import export
-
 from aiida.parsers.parser import Parser
-from ..io import read_bands
+from ..io import read
+
+__all__ = ('BandsParser', )
 
 
-@export
 class BandsParser(Parser):
     """
     Parse bands_inspect eigenvals file to a BandsData object.
@@ -28,4 +27,4 @@ class BandsParser(Parser):
         with out_folder.open(
             self.node.get_option('output_filename'), 'r+b'
         ) as out_file:
-            self.out('bands', read_bands(out_file))
+            self.out('bands', read(out_file))

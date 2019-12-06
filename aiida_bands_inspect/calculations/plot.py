@@ -6,16 +6,15 @@
 Defines the a calculation class for the ``bands-inspect plot`` command.
 """
 
-from fsc.export import export
-
 from aiida import orm
 from aiida.engine import CalcJob
 from aiida.common import CalcInfo, CodeInfo
 
 from ..io import write_bands
 
+__all__ = ('PlotCalculation', )
 
-@export
+
 class PlotCalculation(CalcJob):
     """
     Calculation class for the ``bands_inspect plot`` command.

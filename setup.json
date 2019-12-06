@@ -31,7 +31,7 @@
     "numpy",
     "h5py",
     "aiida-core>=1.0.0,<2.0.0",
-    "fsc.export"
+    "bands-inspect"
   ],
   "extras_require": {
     "testing": [
