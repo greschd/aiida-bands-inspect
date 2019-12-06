@@ -17,6 +17,7 @@ __all__ = ('from_bands_inspect', 'to_bands_inspect')
 @singledispatch
 def from_bands_inspect(data: ty.Union[KpointsBase, EigenvalsData]
                        ) -> ty.Union[orm.KpointsData, orm.BandsData]:
+    """Convert bands-inspect data instances into AiiDA data nodes."""
     raise NotImplementedError(
         f'Cannot convert data type {type(data)} to AiiDA data.'
     )
@@ -53,6 +54,7 @@ def _from_bands_inspect_eigenvals_data(data: EigenvalsData) -> orm.BandsData:
 @singledispatch
 def to_bands_inspect(data: ty.Union[orm.KpointsData, orm.BandsData]
                      ) -> ty.Union[KpointsBase, EigenvalsData]:
+    """Convert AiiDA data nodes into bands-inspect data instances."""
     raise NotImplementedError(
         f'Cannot convert data type {type(data)} to bands-inspect object.'
     )
