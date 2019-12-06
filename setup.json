@@ -23,6 +23,7 @@
     "workflows"
   ],
   "include_package_data": true,
+  "python_requires": ">=3.6",
   "setup_requires": [
     "reentry"
   ],
