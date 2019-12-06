@@ -4,8 +4,6 @@
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
-from __future__ import division, unicode_literals
-
 import pytest
 
 

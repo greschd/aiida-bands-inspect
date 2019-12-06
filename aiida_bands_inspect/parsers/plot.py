@@ -3,15 +3,14 @@
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
-from fsc.export import export
-
 from aiida.plugins import DataFactory
 from aiida.parsers.parser import Parser
 
 from ..calculations.plot import PlotCalculation
 
+__all__ = ('PlotParser', )
 
-@export
+
 class PlotParser(Parser):
     """
     Parse ``bands-inspect plot_bands`` output to a 'singlefile' data.

@@ -5,3 +5,4 @@
 .ropeproject
 dist
 .vscode
+.mypy_cache

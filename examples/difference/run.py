@@ -4,8 +4,6 @@
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
-from __future__ import division, print_function, unicode_literals
-
 from aiida.orm import Code
 from aiida.plugins import DataFactory, CalculationFactory
 from aiida.engine import run

@@ -6,16 +6,15 @@
 Defines a calculation to run the ``bands-inspect difference`` command.
 """
 
-from fsc.export import export
-
 from aiida import orm
 from aiida.engine import CalcJob
 from aiida.common import CalcInfo, CodeInfo
 
 from ..io import write_bands
 
+__all__ = ('DifferenceCalculation', )
 
-@export
+
 class DifferenceCalculation(CalcJob):
     """
     Calculation class for the ``bands-inspect difference`` command.

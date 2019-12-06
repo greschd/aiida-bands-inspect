@@ -24,3 +24,19 @@ Parser classes
 .. autoclass:: aiida_bands_inspect.parsers.difference.DifferenceParser
 
 .. autoclass:: aiida_bands_inspect.parsers.plot.PlotParser
+
+
+Helper modules
+--------------
+
+aiida_bands_inspect.convert
+'''''''''''''''''''''''''''
+
+.. automodule:: aiida_bands_inspect.convert
+    :members:
+
+aiida_bands_inspect.io
+''''''''''''''''''''''
+
+.. automodule:: aiida_bands_inspect.io
+    :members:

@@ -3,15 +3,14 @@
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
-from fsc.export import export
-
 from aiida.plugins import DataFactory
 from aiida.parsers.parser import Parser
-from ..io import read_bands
+from ..io import read
 from ..calculations.align import AlignCalculation
 
+__all__ = ('AlignParser', )
 
-@export
+
 class AlignParser(Parser):
     """
     Parse output of the align command: The shifted eigenvals files to
@@ -39,13 +38,13 @@ class AlignParser(Parser):
                 AlignCalculation._EV1_SHIFTED_FILENAME,  # pylint: disable=protected-access
                 'r+b'
             ) as ev1_shifted_file:
-                self.out('bands1_shifted', read_bands(ev1_shifted_file))
+                self.out('bands1_shifted', read(ev1_shifted_file))
 
             with out_folder.open(
                 AlignCalculation._EV2_SHIFTED_FILENAME,  # pylint: disable=protected-access
                 'r+b'
             ) as ev2_shifted_file:
-                self.out('bands2_shifted', read_bands(ev2_shifted_file))
+                self.out('bands2_shifted', read(ev2_shifted_file))
 
             with out_folder.open(
                 AlignCalculation._OUTPUT_FILE_NAME,  # pylint: disable=protected-access

@@ -3,6 +3,17 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
+env:
+  - TEST_TYPE="tests"
+    INSTALL_TYPE="testing"
+  - TEST_TYPE="tests"
+    INSTALL_TYPE="testing_sdist"
+jobs:
+  include:
+    - python: "3.7"
+      env:
+        - TEST_TYPE="pre-commit"
+          INSTALL_TYPE="dev_precommit"
 cache: pip
 sudo: true
 services:
@@ -20,13 +31,6 @@ addons:
       - python3-matplotlib
       - python3-h5py
       - rabbitmq-server
-env:
-  - TEST_TYPE="pre-commit"
-    INSTALL_TYPE="dev_precommit"
-  - TEST_TYPE="tests"
-    INSTALL_TYPE="testing"
-  - TEST_TYPE="tests"
-    INSTALL_TYPE="testing_sdist"
 before_install:
   - sudo service postgresql restart
   - sudo pip3 install -U pip setuptools
