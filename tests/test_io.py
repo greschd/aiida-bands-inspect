@@ -9,6 +9,9 @@ import tempfile
 import pytest
 import numpy as np
 
+from aiida.plugins import DataFactory
+from aiida_bands_inspect.io import read, write
+
 
 @pytest.mark.parametrize(
     'bands_params', [{
@@ -17,8 +20,6 @@ import numpy as np
     }]
 )
 def test_write_read_bands(configure, bands_params):  # pylint: disable=unused-argument
-    from aiida.plugins import DataFactory
-    from aiida_bands_inspect.io import read, write
     BandsData = DataFactory('array.bands')
     bands = BandsData()
     bands.set_kpoints(bands_params['kpoints'])
@@ -31,8 +32,6 @@ def test_write_read_bands(configure, bands_params):  # pylint: disable=unused-ar
 
 
 def test_write_read_kpoints(configure):  # pylint: disable=unused-argument
-    from aiida.plugins import DataFactory
-    from aiida_bands_inspect.io import read, write
     KpointsData = DataFactory('array.kpoints')
     kpoints = KpointsData()
     kpoints.set_kpoints([[0., 0., 0.]])
@@ -43,7 +42,6 @@ def test_write_read_kpoints(configure):  # pylint: disable=unused-argument
 
 
 def test_read(configure, sample):  # pylint: disable=unused-argument
-    from aiida_bands_inspect.io import read
     res = read(sample('bands_mesh.hdf5'))
     assert np.allclose(res.get_kpoints(), [[0., 0., 0.], [0., 0., 0.5]])
     assert np.allclose(res.get_bands(), [[1, 2], [3, 4]])

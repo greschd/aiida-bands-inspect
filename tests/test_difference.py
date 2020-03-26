@@ -5,16 +5,16 @@
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
-import subprocess
-
 import pytest
 import numpy as np
+
+from aiida.plugins import DataFactory
+from aiida.engine.launch import run_get_node
+from aiida.manage.caching import enable_caching
 
 
 @pytest.fixture
 def get_bands_builder(get_process_builder):
-    from aiida.plugins import DataFactory
-
     builder = get_process_builder(
         calculation_string='bands_inspect.difference',
         code_string='bands_inspect'
@@ -35,28 +35,17 @@ def get_bands_builder(get_process_builder):
 
 
 def test_difference(configure_with_daemon, get_bands_builder):  # pylint: disable=unused-argument
-    from aiida.engine.launch import run_get_node
-
     builder = get_bands_builder
     output, calc_node = run_get_node(builder)
-    print('State:', calc_node.get_state())
-    print('Output:', output)
-    print(
-        subprocess.check_output([
-            "verdi", "process", "report", "{}".format(calc_node.pk)
-        ],
-                                stderr=subprocess.STDOUT)
-    )
+
     assert np.isclose(output['difference'].value, 1 / 3)
+    assert calc_node.is_finished_ok
 
 
 def test_difference_cache(
     configure_with_daemon,  # pylint: disable=unused-argument
     get_bands_builder,
 ):
-    from aiida.engine.launch import run_get_node
-    from aiida.manage.caching import enable_caching
-
     builder = get_bands_builder
 
     # Fast-forwarding is enabled in the configuration for DifferenceCalculation
