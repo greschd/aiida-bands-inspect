@@ -18,7 +18,7 @@ class BandsParser(Parser):
     bands : aiida.orm.nodes.data.array.bands.BandsData
         Retrieved band structure.
     """
-    def parse(self, **kwargs):
+    def parse(self, **kwargs):  # pylint: disable=inconsistent-return-statements
         try:
             out_folder = self.retrieved
         except KeyError:
@@ -28,5 +28,8 @@ class BandsParser(Parser):
         # For compatibility with aiida-tbmodels <= 0.3
         if result_filename is None:
             result_filename = self.node.get_option('output_filename')
-        with out_folder.open(result_filename, 'rb') as out_file:
-            self.out('bands', read(out_file))
+        try:
+            with out_folder.open(result_filename, 'rb') as out_file:
+                self.out('bands', read(out_file))
+        except IOError:
+            return self.exit_codes.ERROR_RESULT_FILE
