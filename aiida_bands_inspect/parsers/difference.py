@@ -3,15 +3,14 @@
 # © 2017-2019, ETH Zurich, Institut für Theoretische Physik
 # Author: Dominik Gresch <greschd@gmx.ch>
 
-from fsc.export import export
-
 from aiida.orm import Float
 from aiida.parsers.parser import Parser
 
 from ..calculations.difference import DifferenceCalculation
 
+__all__ = ('DifferenceParser', )
 
-@export
+
 class DifferenceParser(Parser):
     """
     Parse ``bands_inspect difference`` output to float.

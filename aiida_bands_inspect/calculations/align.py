@@ -8,16 +8,15 @@ Defines a calculation to run the ``bands-inspect align`` command.
 
 import six
 
-from fsc.export import export
-
 from aiida.engine import CalcJob
 from aiida.common import CalcInfo, CodeInfo
 from aiida.plugins import DataFactory
 
-from ..io import write_bands
+from .. import io
+
+__all__ = ('AlignCalculation', )
 
 
-@export
 class AlignCalculation(CalcJob):
     """
     Calculation class for the ``bands-inspect align`` command.
@@ -83,8 +82,8 @@ class AlignCalculation(CalcJob):
     def prepare_for_submission(self, tempfolder):  # pylint: disable=arguments-differ
         ev1_filename = 'eigenvals1.hdf5'
         ev2_filename = 'eigenvals2.hdf5'
-        write_bands(self.inputs.bands1, tempfolder.get_abs_path(ev1_filename))
-        write_bands(self.inputs.bands2, tempfolder.get_abs_path(ev2_filename))
+        io.write(self.inputs.bands1, tempfolder.get_abs_path(ev1_filename))
+        io.write(self.inputs.bands2, tempfolder.get_abs_path(ev2_filename))
 
         code = self.inputs.code
 

@@ -1,7 +1,7 @@
 {
   "name": "aiida-bands-inspect",
   "description": "AiiDA Plugin for running bands_inspect",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Dominik Gresch",
   "author_email": "greschd@gmx.ch",
   "url": "https://aiida-bands-inspect.readthedocs.io",
@@ -23,15 +23,15 @@
     "workflows"
   ],
   "include_package_data": true,
+  "python_requires": ">=3.6",
   "setup_requires": [
     "reentry"
   ],
   "reentry_register": true,
   "install_requires": [
     "numpy",
-    "h5py",
     "aiida-core>=1.0.0,<2.0.0",
-    "fsc.export"
+    "bands-inspect"
   ],
   "extras_require": {
     "testing": [
@@ -39,10 +39,10 @@
       "pytest"
     ],
     "dev_precommit": [
-      "yapf==0.28",
-      "pre-commit==1.20.0",
-      "prospector==1.1.7",
-      "pylint==2.3.1",
+      "yapf==0.29",
+      "pre-commit==2.2.0",
+      "prospector==1.2.0",
+      "pylint==2.4.4",
       "pyflakes==1.6.0"
     ],
     "docs": [
